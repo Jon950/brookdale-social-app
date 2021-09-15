@@ -1,16 +1,9 @@
-.App {
-  text-align: center;
+.app {
+  padding: 5px;
 }
-
 .App-logo {
-  height: 40vmin;
+  height: 90vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
 
 .App-header {
@@ -24,15 +17,35 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.profilePictureBox {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.profilePictureBox h4 {
+  padding-top: 20px;
+}
+.profilePicture {
+  cursor: pointer;
+  background-color: rgb(227, 222, 245);
+  width: 200px;
+  border-radius: 50%;
+}
+.profilePictureFillIn {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  background-color: rgb(227, 222, 245);
+  width: 200px;
+  border-radius: 50%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.starRating {
+  width: 200px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-evenly;
 }
