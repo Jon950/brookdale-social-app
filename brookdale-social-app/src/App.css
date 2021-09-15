@@ -1,0 +1,51 @@
+.app {
+  padding: 5px;
+}
+.App-logo {
+  height: 90vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.profilePictureBox {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.profilePictureBox h4 {
+  padding-top: 20px;
+}
+.profilePicture {
+  cursor: pointer;
+  background-color: rgb(227, 222, 245);
+  width: 200px;
+  border-radius: 50%;
+}
+.profilePictureFillIn {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  background-color: rgb(227, 222, 245);
+  width: 200px;
+  border-radius: 50%;
+}
+
+.starRating {
+  width: 200px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-evenly;
+}
