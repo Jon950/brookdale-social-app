@@ -30,6 +30,12 @@
 .UserProfile h4 {
   padding-top: 20px;
 }
+.colorBar {
+  width: 170px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
 .profilePictureBox {
   height: 300px;
   padding-top: 2px;

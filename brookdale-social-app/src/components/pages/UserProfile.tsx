@@ -12,7 +12,9 @@ function UserProfile() {
     const deslpayName = "John Smith"
     const profilePicUrl = ""
     const email = "johnsmith@gmail.com"
-    const userColor = ""
+    const userColor = "rgb(154, 140, 201)"
+
+    
 
   return (
   
@@ -29,7 +31,7 @@ function UserProfile() {
         <h4>{deslpayName}</h4>
         <StarRatingBar numberOfStars={3.5}/>
         <h5>{email}</h5>
-        <div >{userColor}</div>
+        <div className="colorBar" style={{backgroundColor: userColor}}>Your favorite color</div>
       </div>
 
   );
