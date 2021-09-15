@@ -8,7 +8,7 @@ import StarRatingBar from '../subComponents/StarRatingBar';
 
 
 function UserProfile() {
-    const deslpayName = ""
+    const deslpayName = "Jon"
     const profilePicUrl = ""
 
   return (
