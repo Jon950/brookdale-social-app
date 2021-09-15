@@ -1,34 +1,39 @@
 // React
-import React, {useEffect} from 'react';
+import {
+  Link
+} from "react-router-dom";
 
 // components
 import StarRatingBar from './StarRatingBar';
 
-// Icons
-// import {BsStarFill} from "react-icons/bs";
 
+interface ProfileProps {
+  deslpayName:string,
+  profilePicUrl: string,
+  numberOfStars: number,
+ 
+}
 
-function ProfileBox() {
+const ProfileBox: React.FC<ProfileProps> = ({deslpayName, profilePicUrl, numberOfStars}) => {
   // const [userData, setUserData] = useState({profilePicUrl: "", deslpayName: "John Smith"})
   // const [numberOfStars, setnumberOfStars] = useState( 0);
 
-  const userData = {profilePicUrl: "", deslpayName: "John Smith"};
-  const numberOfStars =  3.5;
 
-  useEffect(() =>{
-    
-  },[])
+
+
 
   
  
   return (
     <>
       <div className="profilePictureBox">
-        {userData.profilePicUrl !== "" ? 
-        <img src={userData.profilePicUrl} className="profilePicture" alt="User Profile Pic" />
-        : <div className="profilePictureFillIn">{userData.deslpayName[0]}</div>
+        <Link to="/userprofile" className="linkBtn">
+        {profilePicUrl !== "" ? 
+        <img src={profilePicUrl} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
+        : <div className="profilePictureFillIn">{deslpayName[0]}</div>
         }
-        <h4>{userData.deslpayName}</h4>
+        </Link>
+        <h4>{deslpayName}</h4>
         <StarRatingBar numberOfStars={numberOfStars}/>
       </div>
     </>

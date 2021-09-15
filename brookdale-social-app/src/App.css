@@ -13,8 +13,32 @@
   pointer-events: none;
 }
 
+.linkBtn {
+  color: white;
+  text-decoration: none;
+}
+
+.UserProfile {
+  height: 100vh;
+  padding-top: 10px;
+  background-color: var(--userColorTheme);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.UserProfile h4 {
+  padding-top: 20px;
+}
+.colorBar {
+  width: 170px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
 .profilePictureBox {
   height: 300px;
+  padding-top: 2px;
   background-color: var(--userColorTheme);
   display: flex;
   flex-direction: column;
@@ -58,7 +82,6 @@
 }
 
 .widgetBox {
-  width: 100vw;
   height: calc(100vh - 300px);
   display: flex;
   justify-content: space-evenly;
@@ -75,6 +98,7 @@
   padding: 5px;
   border-radius: 10px;
   background-color: var(--userColorTrans);
+  cursor: pointer;
 }
 .widget:hover {
   box-shadow: 0px 0px 7px 6px rgb(211, 201, 110);
@@ -87,4 +111,42 @@
   align-items: center;
   background-color: var(--userColorTrans2);
   border-radius: 50%;
+}
+.cornerBtn {
+  width: 15px;
+  height: 15px;
+  position: fixed;
+  padding: 15px;
+  color: white;
+  background-color: var(--userColor);
+}
+.signOutBtn {
+  top: 0;
+  right: 0;
+  border-radius: 0 0 0 100%;
+}
+.signOutBtn .icon {
+  position: fixed;
+  top: 9px;
+  right: 8px;
+}
+.homeBtn {
+  top: 0;
+  left: 0;
+  border-radius: 0 0 100% 0;
+}
+.homeBtn .icon {
+  position: fixed;
+  padding: 8px;
+  top: 0;
+  left: 0;
+}
+@media screen and (min-width: 800px) {
+  .widgetBox {
+    justify-content: center;
+  }
+  .widget {
+    width: 300px;
+    margin: 0 5px;
+  }
 }
