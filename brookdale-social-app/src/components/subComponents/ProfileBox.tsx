@@ -26,7 +26,7 @@ function ProfileBox() {
       <div className="profilePictureBox">
         {userData.profilePicUrl !== "" ? 
         <img src={userData.profilePicUrl} className="profilePicture" alt="User Profile Pic" />
-        : <div className="profilePictureFillIn"></div>
+        : <div className="profilePictureFillIn">{userData.deslpayName[0]}</div>
         }
         <h4>{userData.deslpayName}</h4>
         <StarRatingBar numberOfStars={numberOfStars}/>
