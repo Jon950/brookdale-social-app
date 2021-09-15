@@ -1,33 +1,40 @@
+// React
 // import React, {useState} from 'react';
-// import logo from './brookdale-community-college-mascot-logo.svg';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route
+// } from "react-router-dom";
 
 // CSS
 import './App.css';
 
 // Icons
-import {FaUserFriends} from 'react-icons/fa';
-import {BiNetworkChart} from 'react-icons/bi';
+
 
 // Pages
+import Home from "./components/pages/Home"
+import SignIn from './components/pages/SignIn';
 
 // components
-import ProfileBox from "./components/subComponents/ProfileBox"
-import Widget from './components/subComponents/Widget';
+
 
 function App() {
-  // const [number, setNumber] = useState(0)
-  const numberOfFriends = 10;
-  const numberOfGroups = 3;
+
 
   return (
+    // <Router>
     <div className="app">
-      <ProfileBox/>
+      {false ? <SignIn /> : 
       
-      <section className="widgetBox">
-        <Widget type={"Friends"} numberOf={numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
-        <Widget type={"Group"} numberOf={numberOfGroups} icon={<BiNetworkChart size="30px" title="Friends"/>}/>
-      </section>
+      // <Switch>
+      // <Route ex path="/about">
+      <Home />
+          // </Route>
+      // </Switch>
+}
     </div>
+    // </Router>
   );
 }
 
