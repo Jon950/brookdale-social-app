@@ -13,8 +13,26 @@
   pointer-events: none;
 }
 
+.linkBtn {
+  color: white;
+  text-decoration: none;
+}
+
+.UserProfile {
+  height: 100vh;
+  padding-top: 10px;
+  background-color: var(--userColorTheme);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+.UserProfile h4 {
+  padding-top: 20px;
+}
 .profilePictureBox {
   height: 300px;
+  padding-top: 2px;
   background-color: var(--userColorTheme);
   display: flex;
   flex-direction: column;
@@ -88,7 +106,35 @@
   background-color: var(--userColorTrans2);
   border-radius: 50%;
 }
-
+.cornerBtn {
+  width: 15px;
+  height: 15px;
+  position: fixed;
+  padding: 15px;
+  color: white;
+  background-color: var(--userColor);
+}
+.signOutBtn {
+  top: 0;
+  right: 0;
+  border-radius: 0 0 0 100%;
+}
+.signOutBtn .icon {
+  position: fixed;
+  top: 9px;
+  right: 8px;
+}
+.homeBtn {
+  top: 0;
+  left: 0;
+  border-radius: 0 0 100% 0;
+}
+.homeBtn .icon {
+  position: fixed;
+  padding: 8px;
+  top: 0;
+  left: 0;
+}
 @media screen and (min-width: 800px) {
   .widgetBox {
     justify-content: center;

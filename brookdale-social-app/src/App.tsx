@@ -16,7 +16,7 @@ import './App.css';
 // Pages
 import Home from "./components/pages/Home"
 import SignIn from './components/pages/SignIn';
-import UserProfile from "./components/pages/Home";
+import UserProfile from "./components/pages/UserProfile";
 
 // components
 

@@ -3,6 +3,7 @@
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
 import {BiNetworkChart} from 'react-icons/bi';
+import {GoSignOut} from 'react-icons/go';
 
 // Pages
 
@@ -18,7 +19,9 @@ function UserProfile() {
  
     return (
       <>
-        <ProfileBox deslpayName={"John Smith"} profilePicUrl={""} numberOfStars={3.5}/>
+      <div className="cornerBtn signOutBtn"><GoSignOut size="20px" title="signOut" className="icon"/></div>
+
+      <ProfileBox deslpayName={"John Smith"} profilePicUrl={""} numberOfStars={3.5}/>
       
       <section className="widgetBox">
         <Widget type={"Friends"} numberOf={numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
