@@ -9,6 +9,8 @@ import {
 // CSS
 import './App.css';
 
+// Firebase
+// import {firebaseApp} from "./firebaseConfigDoc"
 
 // Icons
 
@@ -22,6 +24,7 @@ import UserProfile from "./components/pages/UserProfile";
 
 
 function App() {
+console.log("REACT_APP_Test", process.env.REACT_APP_Test)
 
 
   return (
