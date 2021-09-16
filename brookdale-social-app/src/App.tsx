@@ -9,8 +9,6 @@ import {
 // CSS
 import './App.css';
 
-// Firebase
-// import {firebaseApp} from "./firebaseConfigDoc"
 
 // Icons
 
