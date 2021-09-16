@@ -6,6 +6,9 @@ import {Link} from "react-router-dom"
 import {db} from "../../firebaseConfigDoc";
 import { doc, onSnapshot } from "firebase/firestore";
 
+// Data Layer
+import {userDataLayer} from "../../dataLayer"
+
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
 import {BiNetworkChart} from 'react-icons/bi';
@@ -19,25 +22,34 @@ import Widget from '../subComponents/Widget';
 
 
 function UserProfile() {
-  const [userData, setUserData] = useState<any>({displayName: "John Smith", starRating: 0, numberOfFriends: 0, numberOfGroups: 0})
+  const [userData, setUserData] = useState<any>({displayName: "", starRating: 0, numberOfFriends: 0, numberOfGroups: 0})
 
 
   useEffect(() => {
-    onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), (doc) => {
-      const data: any = doc.data()
-      setUserData(data);
-  });
 
+    console.log("userData",userDataLayer.getUserData());
+
+    if(userDataLayer.getUserData().displayName === "") {
+      onSnapshot(doc(db, "users", userDataLayer.uid), (doc) => {
+        const data: any = doc.data()
+        console.log("server --------------------",data)
+        userDataLayer.setAll(data);
+
+        setUserData(userDataLayer.getUserData());
+      });
+    } else {
+      setUserData(userDataLayer.getUserData());
+    }
   },[])
 
  
     return (
       <>
        <Link to="/userprofile">
-         <div className="cornerBtn homeBtn"><CgProfile size="20px" title="User Profile" className="icon"/></div>
+         <div className="cornerBtn homeBtn"><CgProfile size="25px" title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn"><GoSignOut size="20px" title="signOut" className="icon"/></div>
+      <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
 
       <ProfileBox deslpayName={userData.displayName} profilePicUrl={""} numberOfStars={userData.starRating}/>
       
