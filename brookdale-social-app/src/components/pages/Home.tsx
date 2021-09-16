@@ -22,7 +22,7 @@ function UserProfile() {
     return (
       <>
        <Link to="/userprofile">
-         <div className="cornerBtn homeBtn"><CgProfile size="20px" title="signOut" className="icon"/></div>
+         <div className="cornerBtn homeBtn"><CgProfile size="20px" title="User Profile" className="icon"/></div>
         </Link>
 
       <div className="cornerBtn signOutBtn"><GoSignOut size="20px" title="signOut" className="icon"/></div>
@@ -31,7 +31,7 @@ function UserProfile() {
       
       <section className="widgetBox">
         <Widget type={"Friends"} numberOf={numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
-        <Widget type={"Group"} numberOf={numberOfGroups} icon={<BiNetworkChart size="30px" title="Friends"/>}/>
+        <Widget type={"Groups"} numberOf={numberOfGroups} icon={<BiNetworkChart size="30px" title="Friends"/>}/>
       </section>
      
       </>
