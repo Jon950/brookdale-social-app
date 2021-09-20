@@ -54,8 +54,12 @@ function UserProfile() {
       <ProfileBox deslpayName={userData.displayName} profilePicUrl={""} numberOfStars={userData.starRating}/>
       
       <section className="widgetBox">
+        <Link to="/searchtable" className="linkBtn">
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
+        </Link>
+        <Link to="searchtable" className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
+        </Link>
       </section>
      
       </>
