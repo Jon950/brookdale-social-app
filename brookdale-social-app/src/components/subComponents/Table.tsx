@@ -1,6 +1,5 @@
 // React
-
-// Icons
+import { useState } from 'react';
 
 // components
 import StarRatingBar from '../subComponents/StarRatingBar';
@@ -13,14 +12,12 @@ import SearchBox from "../subComponents/SearchBox"
   }
   
   const Table: React.FC<TableProps> = ({tableName, list}) => {
-    
+    const [searchTerm, setSearchTerm] = useState("")
 
-    console.log("table ", tableName, list)
-
-    const testRun = (event: any) => {
+    const testRun = (event: any, inputID: string) => {
         event.preventDefault()
 
-        console.log("testRun", event)
+        console.log("testRun", searchTerm)
     }
 
     return (
@@ -29,10 +26,17 @@ import SearchBox from "../subComponents/SearchBox"
           <h2>{tableName}</h2>
       </div>
         <div className="tableBox">
-        <SearchBox searchSubmit={testRun}/>
+        <SearchBox searchSubmit={testRun} setValue={setSearchTerm}/>
         <div className="table">
             {list.length > 0 ? <div className="scrollBox">
-              {list.map((row: any) => 
+              {list.filter((value: any) => {
+                if(searchTerm === "") {
+                  return value;
+                } else if(value.displayName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ){
+                  return value;
+                }
+                return null;
+              }).map((row: any) => 
               <div key={row.uid} className="tableRow">
                 <span>{row.profilePicUrl === "" ? <div className="tableRowImage">{row.displayName[0]}</div> : row.profilePicUrl}</span>
                 <span>{row.displayName}</span>
