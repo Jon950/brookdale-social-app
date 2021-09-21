@@ -7,7 +7,7 @@ import {db} from "../../firebaseConfigDoc";
 import { doc, onSnapshot } from "firebase/firestore";
 
 // Data Layer
-import {userDataLayer} from "../../dataLayer"
+// import {userDataLayer} from "../../dataLayer"
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
@@ -27,19 +27,14 @@ function UserProfile() {
 
   useEffect(() => {
 
-    console.log("userData",userDataLayer.getUserData());
-
-    if(userDataLayer.getUserData().displayName === "") {
-      onSnapshot(doc(db, "users", userDataLayer.uid), (doc) => {
+      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), (doc) => {
         const data: any = doc.data()
-        console.log("server --------------------",data)
-        userDataLayer.setAll(data);
-
-        setUserData(userDataLayer.getUserData());
+        console.log("Home server --------------------",data)
+        data.numberOfFriends = data.friendsList.length;
+        data.numberOfGroups = data.groupList.length;
+        setUserData(data);
       });
-    } else {
-      setUserData(userDataLayer.getUserData());
-    }
+    
   },[])
 
  
@@ -54,8 +49,15 @@ function UserProfile() {
       <ProfileBox deslpayName={userData.displayName} profilePicUrl={""} numberOfStars={userData.starRating}/>
       
       <section className="widgetBox">
+
+        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", lists:"friendsList"}}} className="linkBtn">
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
+        </Link>
+
+        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", lists:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
+        </Link>
+
       </section>
      
       </>

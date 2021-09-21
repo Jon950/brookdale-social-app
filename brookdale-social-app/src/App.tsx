@@ -17,8 +17,10 @@ import './App.css';
 import Home from "./components/pages/Home"
 import SignIn from './components/pages/SignIn';
 import UserProfile from "./components/pages/UserProfile";
+import SearchTable from "./components/pages/SearchTable"
 
 // components
+
 
 
 function App() {
@@ -37,6 +39,10 @@ console.log("REACT_APP_Test", process.env.REACT_APP_Test)
 
         <Route exact path="/userprofile">
           <UserProfile />
+        </Route>
+
+        <Route exact path="/searchtable">
+          <SearchTable />
         </Route>
        </Switch>
 }

@@ -1,12 +1,33 @@
 :root {
-  --userColor: rgb(154, 140, 201);
-  --userColorTheme: #282c34;
-  --userColorTrans: rgb(154, 140, 201, 0.5);
-  --userColorTrans2: rgba(130, 141, 238, 0.5);
-}
+  --userColorR: 154;
+  --userColorG: 140;
+  --userColorB: 201;
 
+  --userColorDarkTheme: rgb(40, 44, 52, 1);
+  --userColorLightTheme: rgb(255, 255, 255);
+
+  --userColorTheme: var(--userColorDarkTheme);
+
+  --userColor: rgb(var(--userColorR), var(--userColorG), var(--userColorB));
+  --userColorTrans: rgb(var(--userColorR), var(--userColorG), var(--userColorB), 0.75);
+  --userColorTrans2: rgba(
+    calc(var(--userColorR) - 24),
+    calc(var(--userColorG) + 1),
+    calc(var(--userColorB) + 37),
+    0.5
+  );
+}
+/* notes: 
+--userColorTrans: rgb(154, 140, 201, 0.5);
+--userColorTrans2: rgba(130, 141, 238, 0.5);
+*/
+body {
+  overflow: hidden;
+}
 .app {
   overflow: hidden;
+  height: 100vh;
+  background-color: var(--userColorTheme);
 }
 .App-logo {
   height: 90vmin;
@@ -141,6 +162,78 @@
   top: 0;
   left: 0;
 }
+
+.tableHeader {
+  width: 100%;
+  padding: 15px 0;
+  color: white;
+  text-align: center;
+}
+
+.tableBox {
+  width: 100%;
+  height: calc(100% - 60px);
+  border-top: 1px solid var(--userColorTrans);
+}
+
+.table {
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: hidden;
+  /* background-color: blueviolet; */
+}
+
+.tableRow {
+  padding: 5px;
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  border: 1px solid var(--userColorTrans);
+  border-radius: 10px;
+  color: white;
+}
+
+.tableRow .stars {
+  position: absolute;
+  right: 0;
+}
+
+.scrollBox {
+  overflow-x: scroll;
+}
+
+.tableRowImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--userColor);
+}
+
+.emptyTableMessageBox {
+  height: calc(100% - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.searchFormBox {
+  display: flex;
+  justify-content: center;
+}
+.searchInput {
+  width: 90%;
+  padding: 7px;
+  font-size: 20px;
+}
+.searchBtn {
+  width: 10%;
+}
+
 @media screen and (min-width: 800px) {
   .widgetBox {
     justify-content: center;
