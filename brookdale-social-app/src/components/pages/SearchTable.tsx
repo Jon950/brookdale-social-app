@@ -1,10 +1,10 @@
 // React
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {Link, useLocation} from "react-router-dom"
 
 // Firebase
-// import {db} from "../../firebaseConfigDoc";
-// import { doc, onSnapshot } from "firebase/firestore";
+import {db} from "../../firebaseConfigDoc";
+import { doc, onSnapshot } from "firebase/firestore";
 
 // Data Layer
 // import {userDataLayer} from "../../dataLayer"
@@ -19,24 +19,40 @@ import Table from "../subComponents/Table"
 
 
 
-const SearchTable = () => { 
-// const location: object = useLocation();
-// const {tableName} = location.state;
+const SearchTable = () => {
+const location: any = useLocation();
+const [list, setList] = useState<Array<Object>>([])
 
-// console.log(tableName)
+// const list: Array<Object> = [
+//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43h6iu5"},
+//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35g4j"},
+//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hj45k3"},
+//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43hiu5"},
+//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35gk4j"},
+//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hsj45k3"},
+//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "436iu5"},
+//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35fg4j"},
+//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23h45k3"},
+//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43h6aiu5"},
+//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35kkg4j"},
+//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hjw45k3"},
+//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hjw4l5k3"}
+
+// ]
 
   useEffect(() => {
 
-  
-    //   onSnapshot(doc(db, "users", userDataLayer.uid), (doc) => {
-    //     const data: any = doc.data()
-    //     console.log("server --------------------",data)
-    //     userDataLayer.setAll(data);
+      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), (doc: any) => {
+        const data: any = doc.data()
+        console.log("ST --------------------",data)
+      
 
-    //     setUserData(userDataLayer.getUserData());
-    //   });
+        if(data.friendsList.length > 0) {
+          setList(data[location.state.lists]);
+        }
+      });
    
-  },[])
+  },[location])
 
  
     return (
@@ -46,7 +62,7 @@ const SearchTable = () => {
         </Link>
 
       <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
-      <Table tableName={"tableName"} list={[]} />
+      <Table tableName={location.state.tableName} list={list} />
       </>
     );
   }

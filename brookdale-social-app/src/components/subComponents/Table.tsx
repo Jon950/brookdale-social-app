@@ -3,6 +3,7 @@
 // Icons
 
 // components
+import StarRatingBar from '../subComponents/StarRatingBar';
 import SearchBox from "../subComponents/SearchBox"
   
   
@@ -18,6 +19,7 @@ import SearchBox from "../subComponents/SearchBox"
 
     const testRun = (event: any) => {
         event.preventDefault()
+
         console.log("testRun", event)
     }
 
@@ -29,7 +31,15 @@ import SearchBox from "../subComponents/SearchBox"
         <div className="tableBox">
         <SearchBox searchSubmit={testRun}/>
         <div className="table">
-            {list.length > 0 ? <div></div> : <div className="emptyTableMessageBox"><p>There are no {tableName} available.</p></div>}
+            {list.length > 0 ? <div className="scrollBox">
+              {list.map((row: any) => 
+              <div key={row.uid} className="tableRow">
+                <span>{row.profilePicUrl === "" ? <div className="tableRowImage">{row.displayName[0]}</div> : row.profilePicUrl}</span>
+                <span>{row.displayName}</span>
+                <span className="stars"><StarRatingBar numberOfStars={row.starRating}/></span>
+              </div>)}
+            </div> : 
+            <div className="emptyTableMessageBox"><p>There are no {tableName} available.</p></div>}
         </div>
         </div>
       </>

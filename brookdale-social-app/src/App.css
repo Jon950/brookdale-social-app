@@ -21,6 +21,9 @@
 --userColorTrans: rgb(154, 140, 201, 0.5);
 --userColorTrans2: rgba(130, 141, 238, 0.5);
 */
+body {
+  overflow: hidden;
+}
 .app {
   overflow: hidden;
   height: 100vh;
@@ -176,7 +179,38 @@
 .table {
   width: 100%;
   height: calc(100% - 40px);
+  overflow: hidden;
   /* background-color: blueviolet; */
+}
+
+.tableRow {
+  padding: 5px;
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  border: 1px solid var(--userColorTrans);
+  border-radius: 10px;
+  color: white;
+}
+
+.tableRow .stars {
+  position: absolute;
+  right: 0;
+}
+
+.scrollBox {
+  overflow-x: scroll;
+}
+
+.tableRowImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--userColor);
 }
 
 .emptyTableMessageBox {
@@ -189,6 +223,7 @@
 
 .searchFormBox {
   display: flex;
+  justify-content: center;
 }
 .searchInput {
   width: 90%;
