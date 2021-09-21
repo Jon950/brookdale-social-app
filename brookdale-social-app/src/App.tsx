@@ -30,7 +30,7 @@ console.log("REACT_APP_Test", process.env.REACT_APP_Test)
   return (
     <Router>
     <div className="app">
-      {false ? <SignIn /> : 
+      {true ? <SignIn /> : 
       
       <Switch>
         <Route exact path="/">

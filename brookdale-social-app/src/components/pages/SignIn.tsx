@@ -4,7 +4,9 @@
 // import {FaUserFriends} from 'react-icons/fa';
 // import {BiNetworkChart} from 'react-icons/bi';
 
-// Pages
+// Firebase
+// import {auth} from "../../firebaseConfigDoc";
+
 
 // components
 // import ProfileBox from "../subComponents/ProfileBox"
@@ -16,12 +18,9 @@ function SignIn() {
   
  
     return (
-      <>
-      <form>
-          <input type="text" name="email" />
-          <button type="submit" name="submit">SignIn</button>
-      </form>
-      </>
+      <div>
+        <button>SignIn</button>
+      </div>
     );
   }
   

@@ -25,6 +25,7 @@ const firebaseApp = initializeApp( {
 var db = getFirestore(firebaseApp);
 const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
+// const provider = GoogleAuthProvider(firebaseApp);
 
 enableIndexedDbPersistence(db)
   .catch((err) => {
