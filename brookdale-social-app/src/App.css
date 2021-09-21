@@ -9,7 +9,7 @@
   --userColorTheme: var(--userColorDarkTheme);
 
   --userColor: rgb(var(--userColorR), var(--userColorG), var(--userColorB));
-  --userColorTrans: rgb(var(--userColorR), var(--userColorG), var(--userColorB), 0.75);
+  --userColorTrans1: rgb(var(--userColorR), var(--userColorG), var(--userColorB), 0.75);
   --userColorTrans2: rgba(
     calc(var(--userColorR) - 24),
     calc(var(--userColorG) + 1),
@@ -18,11 +18,21 @@
   );
 }
 /* notes: 
---userColorTrans: rgb(154, 140, 201, 0.5);
+--userColorTrans1: rgb(154, 140, 201, 0.5);
 --userColorTrans2: rgba(130, 141, 238, 0.5);
 */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+  background-color: var(--userColor);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--userColorTrans2);
+}
+
 body {
   overflow: hidden;
+  background-color: var(--userColorTheme);
 }
 .app {
   overflow: hidden;
@@ -118,7 +128,7 @@ body {
   align-items: center;
   padding: 5px;
   border-radius: 10px;
-  background-color: var(--userColorTrans);
+  background-color: var(--userColorTrans1);
   cursor: pointer;
 }
 .widget:hover {
@@ -173,12 +183,12 @@ body {
 .tableBox {
   width: 100%;
   height: calc(100% - 60px);
-  border-top: 1px solid var(--userColorTrans);
+  border-top: 1px solid var(--userColorTrans1);
 }
 
 .table {
   width: 100%;
-  height: calc(100% - 40px);
+  height: calc(100% - 64px);
   overflow: hidden;
   /* background-color: blueviolet; */
 }
@@ -188,9 +198,10 @@ body {
   display: flex;
   margin: 5px;
   align-items: center;
-  border: 1px solid var(--userColorTrans);
+  border: 1px solid var(--userColorTrans1);
   border-radius: 10px;
   color: white;
+  position: relative;
 }
 
 .tableRow .stars {
@@ -199,9 +210,13 @@ body {
 }
 
 .scrollBox {
-  overflow-x: scroll;
+  height: calc(100% - 5px);
+  overflow-y: auto;
 }
-
+.thumbnail {
+  border-radius: 50%;
+  margin-right: 10px;
+}
 .tableRowImage {
   width: 40px;
   height: 40px;
@@ -226,7 +241,7 @@ body {
   justify-content: center;
 }
 .searchInput {
-  width: 90%;
+  width: 100%;
   padding: 7px;
   font-size: 20px;
 }
