@@ -27,9 +27,9 @@ function UserProfile() {
 
   useEffect(() => {
 
-      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), (doc) => {
+      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), { includeMetadataChanges: true }, (doc) => {
         const data: any = doc.data()
-        console.log("Home server --------------------",data)
+        console.log("Home server --------------------",doc.metadata.fromCache ? "local cache" : "server", data)
         data.numberOfFriends = data.friendsList.length;
         data.numberOfGroups = data.groupList.length;
         setUserData(data);
