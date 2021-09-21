@@ -50,6 +50,7 @@ import SearchBox from "../subComponents/SearchBox"
             </div> : 
             <div className="emptyTableMessageBox"><p>There are no {tableName} available.</p></div>}
             {/* </FlipMove> */}
+            
         </div>
         </div>
       </>
