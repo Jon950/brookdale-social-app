@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 
 
 
@@ -23,6 +24,7 @@ const firebaseApp = initializeApp( {
 // Initialize Firebase
 var db = getFirestore(firebaseApp);
 const analytics = getAnalytics(firebaseApp);
+const auth = getAuth(firebaseApp);
 
 enableIndexedDbPersistence(db)
   .catch((err) => {
@@ -37,4 +39,4 @@ enableIndexedDbPersistence(db)
       }
   });
 
-export {db, analytics};
+export {db, analytics, auth};

@@ -4,7 +4,7 @@ import {Link, useLocation} from "react-router-dom"
 
 // Firebase
 import {db} from "../../firebaseConfigDoc";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 
 // Data Layer
 // import {userDataLayer} from "../../dataLayer"
@@ -23,22 +23,25 @@ const SearchTable = () => {
 const location: any = useLocation();
 const [list, setList] = useState<Array<Object>>([])
 
-// const list: Array<Object> = [
-//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43h6iu5"},
-//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35g4j"},
-//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hj45k3"},
-//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43hiu5"},
-//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35gk4j"},
-//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hsj45k3"},
-//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "436iu5"},
-//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35fg4j"},
-//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23h45k3"},
-//   {name: "Jon", profilePicUrl: "", starRating: 4, uid: "43h6aiu5"},
-//   {name: "Tim", profilePicUrl: "", starRating: 4.5, uid: "35kkg4j"},
-//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hjw45k3"},
-//   {name: "Mike", profilePicUrl: "", starRating: 3, uid: "23hjw4l5k3"}
+const addNewUser = () => {
+  fetch("https://randomuser.me/api/").then(response  => {
+    response.json().then(data => {
+      console.log("fetch", data.results[0])
+      list.push({
+        displayName: data.results[0].name.first, 
+        profilePicUrl: data.results[0].picture.thumbnail,
+        starRating: Math.floor(Math.random() * 5), 
+        uid: data.results[0].email})
 
-// ]
+      if(list.length > 0){
+        const docRef = doc(db, "users", "4oEsjBBDA2yxz4nItBbY");
+        updateDoc(docRef, {
+          [location.state.listName]: list
+        });
+      }
+    });
+  })
+}
 
   useEffect(() => {
 
@@ -48,7 +51,7 @@ const [list, setList] = useState<Array<Object>>([])
       
 
         if(data.friendsList.length > 0) {
-          setList(data[location.state.lists]);
+          setList(data[location.state.listName]);
         }
       });
    
@@ -62,7 +65,7 @@ const [list, setList] = useState<Array<Object>>([])
         </Link>
 
       <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
-      <Table tableName={location.state.tableName} list={list} />
+      <Table tableName={location.state.tableName} list={list} test={addNewUser} />
       </>
     );
   }

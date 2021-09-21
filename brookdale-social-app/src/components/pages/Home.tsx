@@ -50,11 +50,11 @@ function UserProfile() {
       
       <section className="widgetBox">
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", lists:"friendsList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", listName:"friendsList"}}} className="linkBtn">
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
         </Link>
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", lists:"groupList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", listName:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
         </Link>
 
