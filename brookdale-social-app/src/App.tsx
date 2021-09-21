@@ -42,7 +42,7 @@ console.log("REACT_APP_Test", process.env.REACT_APP_Test)
         </Route>
 
         <Route exact path="/searchtable">
-          <SearchTable deslpayName={""} profilePicUrl={""} numberOfStars={0} />
+          <SearchTable />
         </Route>
        </Switch>
 }

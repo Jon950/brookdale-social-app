@@ -1,6 +1,6 @@
 // React
 import { useEffect } from "react";
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 
 // Firebase
 // import {db} from "../../firebaseConfigDoc";
@@ -17,16 +17,13 @@ import {AiFillHome} from "react-icons/ai";
 import Table from "../subComponents/Table"
 
 
-interface SearchTableProps {
-    deslpayName:string,
-    profilePicUrl: string,
-    numberOfStars: number,
-   
-  }
 
 
-const SearchTable: React.FC<SearchTableProps> = ({deslpayName, profilePicUrl, numberOfStars}) => { 
+const SearchTable = () => { 
+// const location: object = useLocation();
+// const {tableName} = location.state;
 
+// console.log(tableName)
 
   useEffect(() => {
 
@@ -49,7 +46,7 @@ const SearchTable: React.FC<SearchTableProps> = ({deslpayName, profilePicUrl, nu
         </Link>
 
       <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
-      <Table tableName={""} list={[{}]} />
+      <Table tableName={"tableName"} list={[]} />
       </>
     );
   }
