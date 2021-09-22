@@ -20,7 +20,6 @@ import {AiFillHome} from "react-icons/ai";
 import {GoSignOut} from "react-icons/go";
 
 
-
 function UserProfile() {
   const [userData, setUserData] = useState<any>({displayName: "", starRating: 0, numberOfFriends: 0, numberOfGroups: 0});
   const [isColoring, setIsColoring] = useState<boolean>(false);
