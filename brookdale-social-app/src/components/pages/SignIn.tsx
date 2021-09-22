@@ -1,27 +1,51 @@
 // React
 
 // Icons
-// import {FaUserFriends} from 'react-icons/fa';
-// import {BiNetworkChart} from 'react-icons/bi';
+import {FcGoogle} from 'react-icons/fc';
 
-// Pages
-
-// components
-// import ProfileBox from "../subComponents/ProfileBox"
-// import Widget from '../subComponents/Widget';
+// Firebase
+import { auth, provider } from "../../firebaseConfigDoc";
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 
 
 function SignIn() {
+
+ const signInWithGoole = () => {
   
-  
+   signInWithRedirect(auth, provider);
+   
+   getRedirectResult(auth)
+    .then((result: any) => {
+      // This gives you a Google Access Token. You can use it to access Google APIs.
+      const credential: any = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+
+      // The signed-in user info.
+      const user = result.user;
+
+      console.log("token user",token, user);
+    
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+
+      console.log("errorCode", errorCode);
+      console.log("errorMessage", errorMessage);
+      console.log("email", email);
+      console.log("credential", credential);
+    });
+  }
  
     return (
-      <>
-      <form>
-          <input type="text" name="email" />
-          <button type="submit" name="submit">SignIn</button>
-      </form>
-      </>
+      <div className="signInPage">
+        <button onClick={signInWithGoole} className="signInBtn"><FcGoogle size="40"/> SignIn With Google</button>
+      </div>
     );
   }
   

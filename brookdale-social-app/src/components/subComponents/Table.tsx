@@ -17,7 +17,7 @@ import SearchBox from "../subComponents/SearchBox"
     const [searchTerm, setSearchTerm] = useState("")
 
     const testRun = (event: any, inputID: string) => {
-        event.preventDefault()
+        event.preventDefault();
 
         console.log("testRun", searchTerm)
     }
