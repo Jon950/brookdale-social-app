@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import {Link} from "react-router-dom"
 
 // Firebase
-import {db} from "../../firebaseConfigDoc";
-import { doc, onSnapshot } from "firebase/firestore";
+import {db, signOutUser} from "../../firebaseConfigDoc";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 
-// Data Layer
-// import {userDataLayer} from "../../dataLayer"
+// Redux
+// import { bindActionCreators } from "redux"
+import { useSelector } from "react-redux";
+// import {actionCreators} from "../../dataLayer/actionCreators"
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
@@ -24,29 +26,52 @@ import Widget from '../subComponents/Widget';
 function UserProfile() {
   const [userData, setUserData] = useState<any>({displayName: "", starRating: 0, numberOfFriends: 0, numberOfGroups: 0})
 
+  // const dispatch = useDispatch();
+  // const {actionOne} = bindActionCreators(actionCreators, dispatch);
+  const userDataLayer: any = useSelector((state: any) => state.user);
+
 
   useEffect(() => {
 
-      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), { includeMetadataChanges: true }, (doc) => {
-        const data: any = doc.data()
-        console.log("Home server --------------------",doc.metadata.fromCache ? "local cache" : "server", data)
-        data.numberOfFriends = data.friendsList.length;
-        data.numberOfGroups = data.groupList.length;
-        setUserData(data);
+      onSnapshot(doc(db, "users", userDataLayer.payload.uid), { includeMetadataChanges: true }, (thisDoc) => {
+        const data: any = thisDoc.data()
+    
+        if(data) {
+          console.log("Home server --------------------",thisDoc.metadata.fromCache ? "local cache" : "server", data)
+          data.numberOfFriends = data.friendsList ? data.friendsList.length : null;
+          data.numberOfGroups = data.groupList ? data.groupList.length : null;
+
+          document.documentElement.style.setProperty("--userColorR", data.favoriteColor.userColorR);
+          document.documentElement.style.setProperty("--userColorG", data.favoriteColor.userColorG);
+          document.documentElement.style.setProperty("--userColorB", data.favoriteColor.userColorB);
+
+          setUserData(data);
+        } else {
+          setDoc(doc(db, "users", userDataLayer.payload.uid), {
+            displayName: userDataLayer.payload.displayName,
+            favoriteColor: {userColorR: 154,
+                            userColorG: 140,
+                            userColorB: 201},
+            friendsList: [],
+            groupList: [],
+            profilePicUrl: userDataLayer.payload.photoURL,
+            starRating: 0
+          });
+        }
       });
     
-  },[])
-
+  },[userDataLayer.payload])
  
+  console.log(userDataLayer.payload)
     return (
       <>
        <Link to="/userprofile">
          <div className="cornerBtn homeBtn"><CgProfile size="25px" title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
+      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut size="25px" title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userData.displayName} profilePicUrl={""} numberOfStars={userData.starRating}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={userData.starRating}/>
       
       <section className="widgetBox">
 

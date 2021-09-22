@@ -49,6 +49,20 @@ body {
   text-decoration: none;
 }
 
+.signInPage {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signInBtn {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
 .UserProfile {
   height: 100vh;
   padding-top: 10px;
@@ -63,9 +77,13 @@ body {
 }
 .colorBar {
   width: 170px;
-  margin: 5px;
+  margin: 10px 0;
   padding: 5px;
+  border: 1px solid black;
+  border-radius: 20px;
   text-align: center;
+  font-weight: 600;
+  background-color: var(--userColor);
 }
 .profilePictureBox {
   height: 300px;
