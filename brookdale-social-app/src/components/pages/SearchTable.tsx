@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import {Link, useLocation} from "react-router-dom"
 
 // Firebase
-import {db} from "../../firebaseConfigDoc";
+import {db, signOutUser} from "../../firebaseConfigDoc";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 
-// Data Layer
-// import {userDataLayer} from "../../dataLayer"
+// Redux
+import { useSelector } from "react-redux";
 
 // Icons
 import {GoSignOut} from 'react-icons/go';
@@ -20,6 +20,7 @@ import Table from "../subComponents/Table"
 
 
 const SearchTable = () => {
+const userDataLayer: any = useSelector((state: any) => state.user);
 const location: any = useLocation();
 const [list, setList] = useState<Array<Object>>([])
 
@@ -34,8 +35,8 @@ const addNewUser = () => {
         uid: data.results[0].email})
 
       if(list.length > 0){
-        const docRef = doc(db, "users", "4oEsjBBDA2yxz4nItBbY");
-        updateDoc(docRef, {
+        
+        updateDoc(doc(db, "users", userDataLayer.payload.uid), {
           [location.state.listName]: list
         });
       }
@@ -45,17 +46,21 @@ const addNewUser = () => {
 
   useEffect(() => {
 
-      onSnapshot(doc(db, "users", "4oEsjBBDA2yxz4nItBbY"), (doc: any) => {
-        const data: any = doc.data()
-        console.log("ST --------------------",data)
-      
+    onSnapshot(doc(db, "users", userDataLayer.payload.uid), (doc: any) => {
+      const data: any = doc.data()
 
+      if(data) {
+        document.documentElement.style.setProperty("--userColorR", data.favoriteColor.userColorR);
+        document.documentElement.style.setProperty("--userColorG", data.favoriteColor.userColorG);
+        document.documentElement.style.setProperty("--userColorB", data.favoriteColor.userColorB);
+        
         if(data.friendsList.length > 0) {
           setList(data[location.state.listName]);
         }
-      });
+      }
+    });
    
-  },[location])
+  },[location, userDataLayer.payload.uid])
 
  
     return (
@@ -64,7 +69,7 @@ const addNewUser = () => {
          <div className="cornerBtn homeBtn"><AiFillHome size="25px" title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn"><GoSignOut size="25px" title="signOut" className="icon"/></div>
+      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut size="25px" title="signOut" className="icon"/></div>
       <Table tableName={location.state.tableName} list={list} test={addNewUser} />
       </>
     );
