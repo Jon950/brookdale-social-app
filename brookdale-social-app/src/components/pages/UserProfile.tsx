@@ -71,9 +71,9 @@ function UserProfile() {
   
        <div className="UserProfile">
          <Link to="/">
-         <div className="cornerBtn homeBtn"><AiFillHome size="25px" title="signOut" className="icon"/></div>
+         <div className="cornerBtn homeBtn"><AiFillHome  title="signOut" className="icon"/></div>
          </Link>
-         <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut size="25px" title="signOut" className="icon"/></div>
+         <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
         {userDataLayer.payload.photoURL !== "" ? 
         <img src={userDataLayer.payload.photoURL} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
@@ -81,7 +81,7 @@ function UserProfile() {
         }
         <h4>{userDataLayer.payload.displayName}</h4>
 
-        <StarRatingBar numberOfStars={userData.starRating}/>
+        <StarRatingBar size="20px" numberOfStars={userData.starRating}/>
 
         <h5>{userDataLayer.payload.email}</h5>
 

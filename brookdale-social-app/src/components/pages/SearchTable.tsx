@@ -66,11 +66,12 @@ const addNewUser = () => {
     return (
       <>
        <Link to="/">
-         <div className="cornerBtn homeBtn"><AiFillHome size="25px" title="User Profile" className="icon"/></div>
+         <div className="cornerBtn homeBtn"><AiFillHome  title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut size="25px" title="signOut" className="icon"/></div>
-      <Table tableName={location.state.tableName} list={list} test={addNewUser} />
+      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
+      <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
+       list={list} setList={setList} test={addNewUser} />
       </>
     );
   }

@@ -34,7 +34,7 @@ const ProfileBox: React.FC<ProfileProps> = ({deslpayName, profilePicUrl, numberO
         }
         </Link>
         <h4>{deslpayName}</h4>
-        <StarRatingBar numberOfStars={numberOfStars}/>
+        <StarRatingBar size="20px" numberOfStars={numberOfStars}/>
       </div>
     </>
   );
