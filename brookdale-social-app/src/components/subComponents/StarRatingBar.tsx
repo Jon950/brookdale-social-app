@@ -5,12 +5,13 @@
 import {BsStarFill, BsStarHalf, BsStar} from "react-icons/bs";
 
 interface StarProps {
+    size: string,
     numberOfStars: number
 }
 
-const StarRatingBar: React.FC<StarProps> = ({numberOfStars}) => {
+const StarRatingBar: React.FC<StarProps> = ({size = "25px", numberOfStars}) => {
 
-    const starSize = "20px"
+    const starSize = size;
     const starType = [
         <BsStar size={starSize} title="Star Rating"/>,
         <BsStarHalf size={starSize} title="Star Rating"/>,
