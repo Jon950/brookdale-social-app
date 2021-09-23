@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 // Firebase
 import { db } from "../../firebaseConfigDoc";
-import { collection, query, limit, orderBy, where, getDocs, updateDoc, doc, increment } from "firebase/firestore";
+import { collection, query, limit, orderBy, where, getDocs, updateDoc, doc, increment, runTransaction } from "firebase/firestore";
 
 // Redux
 // import { useSelector } from "react-redux";
@@ -18,12 +18,13 @@ import SearchBox from "../subComponents/SearchBox"
     tableName:string,
     collectionName: string
     list: any,
+    listName: string,
     setList: any,
     test: any
     userData: any
   }
   
-  const Table: React.FC<TableProps> = ({tableName, collectionName, list, setList, test, userData}) => {
+  const Table: React.FC<TableProps> = ({tableName, collectionName, list, listName, setList, test, userData}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [OpenRow, setOpenRow] = useState("");
     const [ratings, setRatings] = useState<any>({value: null});
@@ -33,14 +34,11 @@ import SearchBox from "../subComponents/SearchBox"
     const testRun = (event: any, inputID: string) => {
         event.preventDefault();
 
-        console.log("testRun", searchTerm)
     }
 
   const findNewList = () => {
-    console.log("findNewList",collectionName, searchTerm);
     if(searchTerm.length >= 3) {
       const newList: Array<object> = [];
-      console.log("#");
 
       const q = query(collection(db, collectionName), limit(10), orderBy("displayName"),
       where("userNameArray", "array-contains", searchTerm.toLowerCase()), 
@@ -51,7 +49,6 @@ import SearchBox from "../subComponents/SearchBox"
           const data = doc.data();
           data.uid = doc.id;
           // doc.data() is never undefined for query doc snapshots
-          console.log("data", data);
           newList.push(data);
         });
         setList(newList);
@@ -59,8 +56,41 @@ import SearchBox from "../subComponents/SearchBox"
     }
   }
 
-  const addToList = () => {
-    console.log("addtolist")
+  const addToList = (row: any) => {
+    console.log("addtolist", row)
+
+    // Transaction ------------------------------------------------
+    console.log("Transaction")
+    const sfDocRef = doc(db, "users", userData.uid);
+    try {
+      runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(sfDocRef);
+        if (!sfDoc.exists()) {
+          throw console.log("Document does not exist!");
+        }
+
+        
+    
+        const newPopulation = sfDoc.data()[listName];
+
+        if(newPopulation.findIndex((object: any, index:number) => {
+          return object.uid === row.uid;
+        }) === - 1) {
+          newPopulation.push({
+            displayName: row.displayName,
+            profilePicUrl: row.profilePicUrl,
+            favoriteColor: row.favoriteColor,
+            uid: row.uid
+          });
+        }
+
+        transaction.update(sfDocRef, { [listName]: newPopulation });
+        console.log("DDFSDF", newPopulation)
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
   }
 
 
@@ -73,8 +103,6 @@ import SearchBox from "../subComponents/SearchBox"
       }) === -1) {
         userData.starRatingHistory.push({uid: ratings.uid, value: ratings.value});
 
-        
-        console.log("SKHFKJH",ratings)
   
         updateDoc(doc(db, "users", ratings.uid), {
           numberOfRatings: increment(1),
@@ -86,32 +114,20 @@ import SearchBox from "../subComponents/SearchBox"
         let oldData = userData.starRatingHistory[userData.starRatingHistory.findIndex((object: any, index:number) => {
           return object.uid === ratings.uid;
         })].value;
-        console.log("oldData",oldData) 
 
         userData.starRatingHistory[userData.starRatingHistory.findIndex((object: any, index:number) => {
           return object.uid === ratings.uid;
         })].value = ratings.value;
 
-        console.log("SKHFKJH", ratings.value - oldData)
-        // const sfDocRef = doc(db, "users", userData.uid);
-        // try {
-        //   runTransaction(db, async (transaction) => {
-        //     const sfDoc = await transaction.get(sfDocRef);
-        //     if (!sfDoc.exists()) {
-        //       throw console.log("Document does not exist!");
-        //     }
+        updateDoc(doc(db, "users", ratings.uid), {
+          socialScore: increment(ratings.value - oldData)
+        });
+
         
-        //     const newPopulation = sfDoc.data().starRatingHistory;
-        //     transaction.update(sfDocRef, { population: newPopulation });
-        //   });
-        //   console.log("Transaction successfully committed!");
-        // } catch (e) {
-        //   console.log("Transaction failed: ", e);
-        // }
   
-        // updateDoc(doc(db, "users", ratings.uid), {
-        //   socialScore: increment(ratings.value)
-        // });
+        updateDoc(doc(db, "users", ratings.uid), {
+          socialScore: increment(ratings.value)
+        });
         
       }
 
@@ -152,7 +168,7 @@ import SearchBox from "../subComponents/SearchBox"
                 </div>
                 {OpenRow === row.uid ? 
                   <div className="tableRowDropDown">
-                    <button className="smallBtn" onClick={addToList}>Add as {tableName.slice(0, tableName.length -1 )}</button>
+                    <button className="smallBtn" onClick={() => addToList(row)}>Add as {tableName.slice(0, tableName.length -1 )}</button>
                     <span>Rate:</span> 
                     <span className="starSetter">
                       <StarRatingBar size="15px" numberOfStars={ratings.value !== null ? ratings.value : userData.starRatingHistory
