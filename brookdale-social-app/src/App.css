@@ -210,6 +210,15 @@ body {
   top: 0;
   left: 0;
 }
+.smallBtn {
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 17px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--userColor);
+}
 
 .tableHeader {
   width: 100%;
@@ -245,6 +254,33 @@ body {
 .tableRow .stars {
   position: absolute;
   right: 0;
+}
+
+.tableRowDropDown {
+  height: 55px;
+  padding: 5px 0;
+  display: flex;
+  margin: 0 5px;
+  margin-top: -5px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--userColorTrans1);
+  border-radius: 0 0 10px 10px;
+  color: white;
+  position: relative;
+}
+.starSetter {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.tableRowDropDown .slider {
+  width: 116px;
+  position: absolute;
+  bottom: -10px;
+  height: 20px;
+  background-color: rgb(0, 0, 0, 0);
+  -webkit-appearance: none;
 }
 
 .scrollBox {

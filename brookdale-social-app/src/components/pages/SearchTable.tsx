@@ -23,11 +23,13 @@ const SearchTable = () => {
 const userDataLayer: any = useSelector((state: any) => state.user);
 const location: any = useLocation();
 const [list, setList] = useState<Array<Object>>([])
+const [userData, setUserData] = useState<Object>({})
 
 const addNewUser = () => {
   fetch("https://randomuser.me/api/").then(response  => {
     response.json().then(data => {
       console.log("fetch", data.results[0])
+      
       list.push({
         displayName: data.results[0].name.first, 
         profilePicUrl: data.results[0].picture.thumbnail,
@@ -48,12 +50,15 @@ const addNewUser = () => {
 
     onSnapshot(doc(db, "users", userDataLayer.payload.uid), (doc: any) => {
       const data: any = doc.data()
+      data.uid = doc.id;
 
       if(data) {
         document.documentElement.style.setProperty("--userColorR", data.favoriteColor.userColorR);
         document.documentElement.style.setProperty("--userColorG", data.favoriteColor.userColorG);
         document.documentElement.style.setProperty("--userColorB", data.favoriteColor.userColorB);
         
+        setUserData(data);
+
         if(data.friendsList.length > 0) {
           setList(data[location.state.listName]);
         }
@@ -71,7 +76,7 @@ const addNewUser = () => {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
-       list={list} setList={setList} test={addNewUser} />
+       list={list} setList={setList} test={addNewUser}  userData={userData}/>
       </>
     );
   }
