@@ -30,7 +30,7 @@ import SearchTable from "./components/pages/SearchTable"
 
 
 function App() {
-console.log("REACT_APP_Test", process.env.REACT_APP_Test)
+console.log("REACT_APP_Version", process.env.REACT_APP_Version)
 
 const dispatch = useDispatch();
 const {actionOne} = bindActionCreators(actionCreators, dispatch);
