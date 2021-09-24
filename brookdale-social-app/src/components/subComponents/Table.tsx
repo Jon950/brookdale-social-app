@@ -86,7 +86,7 @@ import SearchBox from "../subComponents/SearchBox"
     console.log("addtolist", row)
 
     // Transaction ------------------------------------------------
-    console.log("Transaction")
+    // this user
     const sfDocRef = doc(db, "users", userData.uid);
     try {
       runTransaction(db, async (transaction) => {
@@ -108,6 +108,37 @@ import SearchBox from "../subComponents/SearchBox"
         }
 
         transaction.update(sfDocRef, { [listName]: newPopulation });
+        console.log("DDFSDF", newPopulation)
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+
+
+    // Transaction ------------------------------------------------
+    // Other user
+    const sfDocRef2 = doc(db, "users", OpenRow);
+    try {
+      runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(sfDocRef2);
+        if (!sfDoc.exists()) {
+          throw console.log("Document does not exist!");
+        }
+
+        const newPopulation = sfDoc.data()[listName];
+        if(newPopulation.findIndex((object: any, index:number) => {
+          return object.uid === userData.uid;
+        }) === - 1) {
+          newPopulation.push({
+            displayName: userData.displayName,
+            profilePicUrl: userData.profilePicUrl,
+            favoriteColor: userData.favoriteColor,
+            uid: userData.uid
+          });
+        }
+
+        transaction.update(sfDocRef2, { [listName]: newPopulation });
         console.log("DDFSDF", newPopulation)
       });
       console.log("Transaction successfully committed!");
