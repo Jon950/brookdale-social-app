@@ -121,6 +121,7 @@ import SearchBox from "../subComponents/SearchBox"
   const saveRatings = () => {
     
     if(OpenRow !== "" && ratings.uid){
+
       if(userData.starRatingHistory.findIndex((object: any, index:number) => {
         return object.uid === ratings.uid;
       }) === -1) {
@@ -160,6 +161,10 @@ import SearchBox from "../subComponents/SearchBox"
     }
   }
 
+
+
+
+
     return (
       <>
       <div className="tableHeader">
@@ -187,7 +192,8 @@ import SearchBox from "../subComponents/SearchBox"
                   <span>{row.profilePicUrl === "" ? <div className="tableRowImage">{row.displayName[0]}</div> : 
                   <img width="40" height="40" src={row.profilePicUrl} alt="Thumbnail" className="thumbnail" />}</span>
                   <span>{row.displayName}</span>
-                  <span className="stars"><StarRatingBar size="15px" numberOfStars={(row.socialScore / row.numberOfRatings)}/></span>
+                  <span className="stars"><StarRatingBar size="15px" numberOfStars={
+                    (row.socialScore / (row.numberOfRatings > 0 ? row.numberOfRatings : 1))}/></span>
                 </div>
                 {OpenRow === row.uid ? 
                   <div className="tableRowDropDown">
@@ -204,12 +210,20 @@ import SearchBox from "../subComponents/SearchBox"
 
                     <span>Rate:</span> 
                     <span className="starSetter">
-                      <StarRatingBar size="15px" numberOfStars={ratings.value !== null ? ratings.value : userData.starRatingHistory
-                      [userData.starRatingHistory.findIndex((object: any, index:number) => {return object.uid === row.uid;
-                      })].value}/>
+                      
+                      <StarRatingBar size="15px" numberOfStars={
+                        ratings.value ? ratings.value 
+                        : userData.starRatingHistory.length > 0 ? 
+                            userData.starRatingHistory.findIndex((object: any, index:number) => 
+                              {return object.uid === row.uid; }) === -1 ? 
+                              (userData.socialScore / (userData.numberOfRatings === 0 ? 1 : userData.numberOfRatings))
+                                : userData.starRatingHistory[userData.starRatingHistory.findIndex((object: any, index:number) => 
+                                  {return object.uid === row.uid; })].value 
+                          : (userData.socialScore / (userData.numberOfRatings === 0 ? 1 : userData.numberOfRatings))}/>
+                      
                       <input className="slider" type="range" min="1" max="5" step=".5"  
                       onChange={(event:any) => setRatings({uid: row.uid, value: event.target.value})} />
-                      </span>
+                    </span>
                   </div>
                   : ""
                 }
