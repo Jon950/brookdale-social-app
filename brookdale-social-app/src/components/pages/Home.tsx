@@ -32,7 +32,7 @@ function UserProfile() {
 
 
   useEffect(() => {
-console.log("DS",userDataLayer.payload.displayName.length)
+
       onSnapshot(doc(db, "users", userDataLayer.payload.uid), { includeMetadataChanges: true }, (thisDoc) => {
         const data: any = thisDoc.data()
     
@@ -71,7 +71,7 @@ console.log("DS",userDataLayer.payload.displayName.length)
       });
     
   },[userDataLayer.payload])
- 
+
     return (
       <>
        <Link to="/userprofile">
@@ -80,7 +80,7 @@ console.log("DS",userDataLayer.payload.displayName.length)
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / userData.numberOfRatings)}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings === 0 ? 1 : userData.numberOfRatings))}/>
       
       <section className="widgetBox">
 
