@@ -80,6 +80,31 @@ import SearchBox from "../subComponents/SearchBox"
     } catch (e) {
       console.log("Transaction failed: ", e);
     }
+
+
+    // other user -------------------------------------------------------------
+    const sfDocRef2 = doc(db, "users", OpenRow);
+    try {
+      runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(sfDocRef2);
+        if (!sfDoc.exists()) {
+          throw console.log("Document does not exist!");
+        }
+
+        const newPopulation = sfDoc.data()[listName];
+        
+        newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
+            return object.uid === userData.uid;
+          }), 1 );
+        
+
+        transaction.update(sfDocRef2, { [listName]: newPopulation });
+        console.log("DDFSDF", newPopulation)
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
   }
 
   const addToList = (row: any) => {
