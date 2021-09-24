@@ -76,7 +76,7 @@ const addNewUser = () => {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
-       list={list} listName={location.state.listName} setList={setList} test={addNewUser}  userData={userData}/>
+       list={list} requestListName={location.state.requestListName} listName={location.state.listName} setList={setList} test={addNewUser}  userData={userData}/>
       </>
     );
   }

@@ -61,11 +61,13 @@ function UserProfile() {
             favoriteColor: {userColorR: 154,
                             userColorG: 140,
                             userColorB: 201},
+            friendRequests: [],
             friendsList: [],
             groupList: [],
             profilePicUrl: userDataLayer.payload.photoURL,
             socialScore: 0,
-            numberOfRatings: 1
+            numberOfRatings: 0,
+            starRatingHistory: []
           });
         }
       });
@@ -80,15 +82,15 @@ function UserProfile() {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings === 0 ? 1 : userData.numberOfRatings))}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings > 0 ? userData.numberOfRatings : 1))}/>
       
       <section className="widgetBox">
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", collectionName: "users", listName:"friendsList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", collectionName: "users", requestListName: "friendRequests", listName:"friendsList"}}} className="linkBtn">
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
         </Link>
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", listName:"groupList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
         </Link>
 

@@ -223,8 +223,22 @@ body {
 .tableHeader {
   width: 100%;
   padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
-  text-align: center;
+}
+
+.tableHeader h2 {
+  position: relative;
+}
+
+.newUserIcon {
+  padding: 3px 5px;
+  position: absolute;
+  border-radius: 4px;
+  font-size: 13px;
+  background-color: red;
 }
 
 .tableBox {
