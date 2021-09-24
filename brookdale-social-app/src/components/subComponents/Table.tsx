@@ -119,7 +119,8 @@ import SearchBox from "../subComponents/SearchBox"
 
 
   const saveRatings = () => {
-    if(OpenRow && ratings.uid){
+    
+    if(OpenRow !== "" && ratings.uid){
       if(userData.starRatingHistory.findIndex((object: any, index:number) => {
         return object.uid === ratings.uid;
       }) === -1) {
