@@ -64,14 +64,14 @@ console.log("DS",userDataLayer.payload.displayName.length)
             friendsList: [],
             groupList: [],
             profilePicUrl: userDataLayer.payload.photoURL,
-            starRating: 0
+            socialScore: 0,
+            numberOfRatings: 1
           });
         }
       });
     
   },[userDataLayer.payload])
  
-  console.log(userDataLayer.payload)
     return (
       <>
        <Link to="/userprofile">
@@ -80,7 +80,7 @@ console.log("DS",userDataLayer.payload.displayName.length)
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={userData.starRating}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / userData.numberOfRatings)}/>
       
       <section className="widgetBox">
 

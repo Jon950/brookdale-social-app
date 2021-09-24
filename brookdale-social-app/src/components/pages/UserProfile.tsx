@@ -81,7 +81,7 @@ function UserProfile() {
         }
         <h4>{userDataLayer.payload.displayName}</h4>
 
-        <StarRatingBar size="20px" numberOfStars={userData.starRating}/>
+        <StarRatingBar size="20px" numberOfStars={(userData.socialScore / userData.numberOfRatings)}/>
 
         <h5>{userDataLayer.payload.email}</h5>
 
