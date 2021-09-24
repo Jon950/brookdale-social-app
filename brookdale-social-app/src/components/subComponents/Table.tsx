@@ -204,9 +204,10 @@ import SearchBox from "../subComponents/SearchBox"
 
                     <span>Rate:</span> 
                     <span className="starSetter">
-                      <StarRatingBar size="15px" numberOfStars={ratings.value !== null ? ratings.value : userData.starRatingHistory
+                      <StarRatingBar size="15px" numberOfStars={
+                        ratings.value !== null ? ratings.value : userData.starRatingHistory ? userData.starRatingHistory
                       [userData.starRatingHistory.findIndex((object: any, index:number) => {return object.uid === row.uid;
-                      })].value}/>
+                      })].value : (row.socialScore / row.numberOfRatings)}/>
                       <input className="slider" type="range" min="1" max="5" step=".5"  
                       onChange={(event:any) => setRatings({uid: row.uid, value: event.target.value})} />
                       </span>
