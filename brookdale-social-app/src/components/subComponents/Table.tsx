@@ -55,6 +55,32 @@ import SearchBox from "../subComponents/SearchBox"
       });
     }
   }
+  const removeFromList = (row: any) => {
+    console.log("removeFromList", row)
+
+    const sfDocRef = doc(db, "users", userData.uid);
+    try {
+      runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(sfDocRef);
+        if (!sfDoc.exists()) {
+          throw console.log("Document does not exist!");
+        }
+
+        const newPopulation = sfDoc.data()[listName];
+        
+        newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
+            return object.uid === row.uid;
+          }), 1 );
+        
+
+        transaction.update(sfDocRef, { [listName]: newPopulation });
+        console.log("DDFSDF", newPopulation)
+      });
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+  }
 
   const addToList = (row: any) => {
     console.log("addtolist", row)
@@ -69,10 +95,7 @@ import SearchBox from "../subComponents/SearchBox"
           throw console.log("Document does not exist!");
         }
 
-        
-    
         const newPopulation = sfDoc.data()[listName];
-
         if(newPopulation.findIndex((object: any, index:number) => {
           return object.uid === row.uid;
         }) === - 1) {
@@ -96,8 +119,7 @@ import SearchBox from "../subComponents/SearchBox"
 
 
   const saveRatings = () => {
-    if(OpenRow){
-
+    if(OpenRow && ratings.uid){
       if(userData.starRatingHistory.findIndex((object: any, index:number) => {
         return object.uid === ratings.uid;
       }) === -1) {
@@ -168,7 +190,17 @@ import SearchBox from "../subComponents/SearchBox"
                 </div>
                 {OpenRow === row.uid ? 
                   <div className="tableRowDropDown">
-                    <button className="smallBtn" onClick={() => addToList(row)}>Add as {tableName.slice(0, tableName.length -1 )}</button>
+                    {
+                    userData[listName].findIndex((object: any, index:number) => {
+                      return object.uid === row.uid;
+                    }) === -1 ?  
+                      <button className="smallBtn" onClick={() => addToList(row)}>
+                        Add {tableName.slice(0, tableName.length -1 )}</button>
+                    : 
+                      <button className="smallBtn" onClick={() => removeFromList(row)}>
+                        Un{tableName.slice(0, tableName.length -1 )}</button>
+                    }
+
                     <span>Rate:</span> 
                     <span className="starSetter">
                       <StarRatingBar size="15px" numberOfStars={ratings.value !== null ? ratings.value : userData.starRatingHistory
