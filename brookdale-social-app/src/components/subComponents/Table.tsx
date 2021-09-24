@@ -146,12 +146,6 @@ import SearchBox from "../subComponents/SearchBox"
         updateDoc(doc(db, "users", ratings.uid), {
           socialScore: increment(ratings.value - oldData)
         });
-
-        
-  
-        updateDoc(doc(db, "users", ratings.uid), {
-          socialScore: increment(ratings.value)
-        });
         
       }
 
