@@ -32,12 +32,12 @@ function UserProfile() {
 
 
   useEffect(() => {
-
+console.log("DS",userDataLayer.payload.displayName.length)
       onSnapshot(doc(db, "users", userDataLayer.payload.uid), { includeMetadataChanges: true }, (thisDoc) => {
         const data: any = thisDoc.data()
     
         if(data) {
-          console.log("Home server --------------------",thisDoc.metadata.fromCache ? "local cache" : "server", data)
+          // console.log("Home server --------------------",thisDoc.metadata.fromCache ? "local cache" : "server", data)
           data.numberOfFriends = data.friendsList ? data.friendsList.length : null;
           data.numberOfGroups = data.groupList ? data.groupList.length : null;
 
@@ -47,39 +47,48 @@ function UserProfile() {
 
           setUserData(data);
         } else {
+          const letterArray = []
+          let index = 3;
+          while (index <= userDataLayer.payload.displayName.length) {
+
+            letterArray.push(userDataLayer.payload.displayName.slice(0,index).toLowerCase());
+            ++index;
+          }
+        
           setDoc(doc(db, "users", userDataLayer.payload.uid), {
             displayName: userDataLayer.payload.displayName,
+            userNameArray: letterArray,
             favoriteColor: {userColorR: 154,
                             userColorG: 140,
                             userColorB: 201},
             friendsList: [],
             groupList: [],
             profilePicUrl: userDataLayer.payload.photoURL,
-            starRating: 0
+            socialScore: 0,
+            numberOfRatings: 1
           });
         }
       });
     
   },[userDataLayer.payload])
  
-  console.log(userDataLayer.payload)
     return (
       <>
        <Link to="/userprofile">
-         <div className="cornerBtn homeBtn"><CgProfile size="25px" title="User Profile" className="icon"/></div>
+         <div className="cornerBtn homeBtn"><CgProfile  title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut size="25px" title="signOut" className="icon"/></div>
+      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={userData.starRating}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / userData.numberOfRatings)}/>
       
       <section className="widgetBox">
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", listName:"friendsList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Friends", collectionName: "users", listName:"friendsList"}}} className="linkBtn">
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
         </Link>
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", listName:"groupList"}}} className="linkBtn">
+        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", listName:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
         </Link>
 
