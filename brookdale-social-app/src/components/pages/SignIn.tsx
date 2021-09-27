@@ -46,13 +46,13 @@ function SignIn() {
     return (
       <div className="signInPage">
       <section className="welcomeSection">
-      <img src={logo} alt="BsocialX Logo" width="100" height="100"></img>
-      {/* {logo ? logo : ""} */}
+      <img src={logo} alt="BsocialX Logo" width="250" height="250"></img>
         <h1>Welcome To BsocialX</h1>
       </section>
 
       <section className="signInBtnBox">
         <button onClick={signInWithGoole} className="signInBtn"><FcGoogle size="40"/> SignIn With Google</button>
+        <p>The Brookdale Social Experiment or BsocialX, is a research app designed to study the response of a particular policy.</p>
       </section>
       </div>
     );
