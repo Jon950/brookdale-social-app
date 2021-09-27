@@ -2,6 +2,7 @@
 
 // Icons
 import {FcGoogle} from 'react-icons/fc';
+import logo from '../../images/brookdale-community-college-mascot-logo.svg';
 
 // Firebase
 import { auth, provider } from "../../firebaseConfigDoc";
@@ -44,7 +45,15 @@ function SignIn() {
  
     return (
       <div className="signInPage">
+      <section className="welcomeSection">
+      <img src={logo} alt="BsocialX Logo" width="100" height="100"></img>
+      {/* {logo ? logo : ""} */}
+        <h1>Welcome To BsocialX</h1>
+      </section>
+
+      <section className="signInBtnBox">
         <button onClick={signInWithGoole} className="signInBtn"><FcGoogle size="40"/> SignIn With Google</button>
+      </section>
       </div>
     );
   }
