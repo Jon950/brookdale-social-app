@@ -18,17 +18,37 @@ import SearchBox from "../subComponents/SearchBox"
     tableName:string,
     collectionName: string
     list: any,
-    requestListName: string,
+    listOut: Array<object>,
     listName: string,
-    setList: any,
+    setListOut: any,
     test: any
     userData: any
   }
   
-  const Table: React.FC<TableProps> = ({tableName, collectionName, list, requestListName, listName, setList, test, userData}) => {
+  const Table: React.FC<TableProps> = ({tableName, collectionName, list, listOut, listName, setListOut, test, userData}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [OpenRow, setOpenRow] = useState("");
     const [ratings, setRatings] = useState<any>({value: null});
+    
+
+    const requestList: Array<any> = list.filter((value: any) => {
+      if(value.status === "request"){
+        return value;
+      }
+      return null;
+    });
+
+
+    const friendsList = list.filter((value: any) => {
+      if(value.status === "friend"){
+        return value;
+      }
+      return null;
+    });
+
+    
+
+
 
 
     const openRowStyle = {borderRadius: "10px 10px 0 0"};
@@ -37,6 +57,7 @@ import SearchBox from "../subComponents/SearchBox"
 
     }
 
+  // ------------------------------------------------------------ find New List
   const findNewList = () => {
     if(searchTerm.length >= 3) {
       const newList: Array<object> = [];
@@ -52,12 +73,13 @@ import SearchBox from "../subComponents/SearchBox"
           // doc.data() is never undefined for query doc snapshots
           newList.push(data);
         });
-        setList(newList);
+        setListOut(newList);
       });
     }
   }
 
 
+  // ------------------------------------------------------------ remove From List
   const removeFromList = (row: any) => {
     console.log("removeFromList", row)
 
@@ -85,7 +107,7 @@ import SearchBox from "../subComponents/SearchBox"
 
 
     // other user -------------------------------------------------------------
-    const sfDocRef2 = doc(db, "users", OpenRow);
+    const sfDocRef2 = doc(db, "users", row.uid);
     try {
       runTransaction(db, async (transaction) => {
         const sfDoc = await transaction.get(sfDocRef2);
@@ -93,14 +115,14 @@ import SearchBox from "../subComponents/SearchBox"
           throw console.log("Document does not exist!");
         }
 
-        const newPopulation = sfDoc.data()[requestListName];
+        const newPopulation = sfDoc.data()[listName];
         
         newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
             return object.uid === userData.uid;
           }), 1 );
         
 
-        transaction.update(sfDocRef2, { [requestListName]: newPopulation });
+        transaction.update(sfDocRef2, { [listName]: newPopulation });
       });
       console.log("Transaction successfully committed!");
     } catch (e) {
@@ -108,195 +130,10 @@ import SearchBox from "../subComponents/SearchBox"
     }
   }
 
-  const addToList = (row: any) => {
-    console.log("addtolist", row)
-
-    // Transaction ------------------------------------------------
-    // this user
-    const sfDocRef = doc(db, "users", userData.uid);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[requestListName + "History"];
-        if(newPopulation.findIndex((object: any, index:number) => {
-          return object.uid === row.uid;
-        }) === - 1) {
-          newPopulation.push({
-            displayName: row.displayName,
-            profilePicUrl: row.profilePicUrl,
-            favoriteColor: row.favoriteColor,
-            uid: row.uid
-          });
-        }
-
-        transaction.update(sfDocRef, { [requestListName + "History"]: newPopulation });
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-
-
-    // Transaction ------------------------------------------------
-    // Other user
-    const sfDocRef2 = doc(db, "users", OpenRow);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef2);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[requestListName];
-        if(newPopulation.findIndex((object: any, index:number) => {
-          return object.uid === userData.uid;
-        }) === - 1) {
-          newPopulation.push({
-            displayName: userData.displayName,
-            profilePicUrl: userData.profilePicUrl,
-            favoriteColor: userData.favoriteColor,
-            uid: userData.uid
-          });
-        }
-
-        transaction.update(sfDocRef2, { [requestListName]: newPopulation });
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-  }
+ 
 
 
 
-
-  const exceptRequest = (row: any) => {
-
-
-    // added user row.uid to listName in user userData.uid
-    // added user 1 to user 2 frineds list
-    const sfDocRef = doc(db, "users", userData.uid);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[listName];
-        if(newPopulation.findIndex((object: any, index:number) => {
-          return object.uid === row.uid;
-        }) === - 1) {
-          newPopulation.push({
-            displayName: row.displayName,
-            profilePicUrl: row.profilePicUrl,
-            favoriteColor: row.favoriteColor,
-            uid: row.uid
-          });
-        }
-
-        transaction.update(sfDocRef, { [listName]: newPopulation });
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-
-
-
-    // remove user 1 userData.uid from user's row.uid requestListName
-    // remove user 1 from user 2 friendRequests list
-    const sfDocRef2 = doc(db, "users", userData.uid);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef2);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[requestListName];
-        
-        newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
-            return object.uid === row.uid;
-          }), 1 );
-        
-
-        transaction.update(sfDocRef2, { [requestListName]: newPopulation });
-        console.log("DDFSDF", newPopulation)
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-
-
-    // added user row.uid to listName in user userData.uid
-    // added user 2 to user 1 friends list
-    const sfDocRef11 = doc(db, "users", row.uid);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef11);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[listName];
-        if(newPopulation.findIndex((object: any, index:number) => {
-          return object.uid === userData.uid;
-        }) === - 1) {
-          newPopulation.push({
-            displayName: userData.displayName,
-            profilePicUrl: userData.profilePicUrl,
-            favoriteColor: userData.favoriteColor,
-            uid: userData.uid
-          });
-        }
-
-        transaction.update(sfDocRef11, { [listName]: newPopulation });
-        console.log("DDFSDF", newPopulation)
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-
-
-
-    // remove user 1 userData.uid from user's row.uid requestListName
-    // remove user 2 from user 1 friendRequestsHistory list
-    const sfDocRef12 = doc(db, "users", row.uid);
-    try {
-      runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(sfDocRef12);
-        if (!sfDoc.exists()) {
-          throw console.log("Document does not exist!");
-        }
-
-        const newPopulation = sfDoc.data()[requestListName + "History"];
-        
-        newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
-            return object.uid === userData.uid;
-          }), 1 );
-        
-
-        transaction.update(sfDocRef12, { [requestListName]: newPopulation });
-      });
-      console.log("Transaction successfully committed!");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-    }
-  }
-
-
-
-  
-  const getRequest = () => {
-    setList(userData[requestListName]);
-  }
 
 
   const saveRatings = () => {
@@ -337,23 +174,119 @@ import SearchBox from "../subComponents/SearchBox"
   }
 
 
+  // ----------------------------------------------------------------------------- set To List
+  const setToList = (row: any, operationType: string = "") => {
+
+    if(operationType !== "") {
+      // added to other user
+      const otherUserDocRef = doc(db, "users", row.uid);
+      try {
+        runTransaction(db, async (transaction) => {
+          const sfDoc = await transaction.get(otherUserDocRef);
+          if (!sfDoc.exists()) {
+            throw console.log("Document does not exist!");
+          }
+
+          const newPopulation = sfDoc.data()[listName];
+
+          if(operationType === "request") {
+            if(newPopulation.findIndex((object: any, index:number) => {
+              return object.uid === userData.uid;
+            }) === - 1) {
+              newPopulation.push({
+                displayName: userData.displayName,
+                profilePicUrl: userData.profilePicUrl,
+                favoriteColor: userData.favoriteColor,
+                uid: userData.uid,
+                status: operationType
+              });
+            }
+          } else if(operationType === "exceptRequest") {
+            newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
+              return object.uid === userData.uid;
+            }), 1 );
+            newPopulation.push({
+              displayName: userData.displayName,
+              profilePicUrl: userData.profilePicUrl,
+              favoriteColor: userData.favoriteColor,
+              uid: userData.uid,
+              status: "friend"
+            });
+          }
+
+          transaction.update(otherUserDocRef, { [listName]: newPopulation });
+          console.log("DDFSDF", newPopulation)
+        });
+        console.log("Transaction successfully committed!");
+      } catch (e) {
+        console.log("Transaction failed: ", e);
+      }
+
+
+      // added to other this user
+      const thisUserDocRef = doc(db, "users", userData.uid);
+      try {
+        runTransaction(db, async (transaction) => {
+          const sfDoc = await transaction.get(thisUserDocRef);
+          if (!sfDoc.exists()) {
+            throw console.log("Document does not exist!");
+          }
+
+          const newPopulation = sfDoc.data()[listName];
+
+          if(operationType === "request") {
+            if(newPopulation.findIndex((object: any, index:number) => {
+              return object.uid === row.uid;
+            }) === - 1) {
+              newPopulation.push({
+                displayName: row.displayName,
+                profilePicUrl: row.profilePicUrl,
+                favoriteColor: row.favoriteColor,
+                uid: row.uid,
+                status: "myRequest"
+              });
+            }
+          } else if(operationType === "exceptRequest") {
+            newPopulation.splice(newPopulation.findIndex((object: any, index:number) => {
+              return object.uid === row.uid;
+            }), 1 );
+            newPopulation.push({
+              displayName: row.displayName,
+              profilePicUrl: row.profilePicUrl,
+              favoriteColor: row.favoriteColor,
+              uid: row.uid,
+              status: "friend"
+            });
+          }
+
+          transaction.update(thisUserDocRef, { [listName]: newPopulation });
+          console.log("DDFSDF", newPopulation)
+        });
+        console.log("Transaction successfully committed!");
+      } catch (e) {
+        console.log("Transaction failed: ", e);
+      }
+    }
+  }
+
     return (
       <>
       <div className="tableHeader">
-          <h2>{tableName}{userData[requestListName] ? userData[requestListName].length > 0 ? 
-            <span onClick={getRequest} className="newUserIcon">{userData[requestListName].length}</span> : "" : ""}</h2>
+          <h2>{tableName}{requestList.length > 0 ? 
+            <span onClick={() => setListOut(requestList)} className="newUserIcon">{requestList.length}</span> : ""}</h2>
           {/* <button onClick={test}>test</button> */}
       </div>
         <div className="tableBox">
         <SearchBox searchSubmit={testRun} setValue={setSearchTerm}/>
         <button className="findNewBtn" onClick={findNewList}>Find New {tableName}</button>
+        <button className="findNewBtn" onClick={() => setListOut(friendsList)}>{tableName} List</button>
         <div className="table">
           {/* <FlipMove> */}
-            {list.length > 0 ? <div className="scrollBox">
-              {list.filter((value: any) => {
+            {listOut.length > 0 ? <div className="scrollBox">
+              {listOut.filter((value: any) => {
                 if(searchTerm === "") {
                   return value;
-                } else if(value.displayName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ){
+                } else if(value.displayName.toLowerCase().includes(searchTerm.toLocaleLowerCase())){
                   return value;
                 }
                 return null;
@@ -371,24 +304,24 @@ import SearchBox from "../subComponents/SearchBox"
                 {OpenRow === row.uid ? 
                   <div className="tableRowDropDown">
                     {
-                    // are in friends list?
+                    // is in friends list?
                     userData[listName].findIndex((object: any, index:number) => {
-                      return object.uid === row.uid;
+                      return object.uid === row.uid && object.status === "friend";
                     }) === -1 ? 
 
-                    // are in friends request list?
-                    userData[requestListName].findIndex((object: any, index:number) => {
-                      return object.uid === row.uid;
+                    // is in friends request list?
+                    userData[listName].findIndex((object: any, index:number) => {
+                      return object.uid === row.uid && object.status === "myRequest";
                     }) === -1 ?
 
-                    // are in friends request list?
-                    userData[requestListName].findIndex((object: any, index:number) => {
-                      return object.uid === row.uid;
+                    // is in this friends request list?
+                    userData[listName].findIndex((object: any, index:number) => {
+                      return object.uid === row.uid && object.status === "request";
                     }) === -1 ? 
-                        <button className="smallBtn" onClick={() => addToList(row)}>
+                        <button className="smallBtn" onClick={() => setToList(row, "request")}>
                           Request {tableName.slice(0, tableName.length -1 )}</button>
                       :
-                        <button className="smallBtn" onClick={() => exceptRequest(row)}>
+                        <button className="smallBtn" onClick={() => setToList(row, "exceptRequest")}>
                           Except Request</button>
                       : 
                         <button className="smallBtn" onClick={() => removeFromList(row)}>

@@ -38,7 +38,12 @@ function UserProfile() {
     
         if(data) {
           // console.log("Home server --------------------",thisDoc.metadata.fromCache ? "local cache" : "server", data)
-          data.numberOfFriends = data.friendsList ? data.friendsList.length : null;
+          data.numberOfFriends = data.friendsList ? data.friendsList.filter((value: any) => {
+            if(value.status === "friend"){
+              return value;
+            }
+            return null;
+          }).length : null;
           data.numberOfGroups = data.groupList ? data.groupList.length : null;
 
           document.documentElement.style.setProperty("--userColorR", data.favoriteColor.userColorR);
@@ -61,7 +66,6 @@ function UserProfile() {
             favoriteColor: {userColorR: 154,
                             userColorG: 140,
                             userColorB: 201},
-            friendRequests: [],
             friendsList: [],
             groupList: [],
             profilePicUrl: userDataLayer.payload.photoURL,
