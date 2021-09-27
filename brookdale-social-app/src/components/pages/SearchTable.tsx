@@ -22,8 +22,9 @@ import Table from "../subComponents/Table"
 const SearchTable = () => {
 const userDataLayer: any = useSelector((state: any) => state.user);
 const location: any = useLocation();
-const [list, setList] = useState<Array<Object>>([])
-const [userData, setUserData] = useState<Object>({})
+const [list, setList] = useState<Array<Object>>([]);
+const [listOut, setListOut] = useState<Array<Object>>([]);
+const [userData, setUserData] = useState<Object>({});
 
 const addNewUser = () => {
   fetch("https://randomuser.me/api/").then(response  => {
@@ -61,6 +62,12 @@ const addNewUser = () => {
 
         if(data.friendsList.length > 0) {
           setList(data[location.state.listName]);
+          setListOut(data[location.state.listName].filter((value: any) => {
+            if(value.status === "friend"){
+              return value;
+            }
+            return null;
+          }));
         }
       }
     });
@@ -76,7 +83,7 @@ const addNewUser = () => {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
-       list={list} listName={location.state.listName} setList={setList} test={addNewUser}  userData={userData}/>
+       list={list} listOut={listOut} listName={location.state.listName} setListOut={setListOut} test={addNewUser}  userData={userData}/>
       </>
     );
   }
