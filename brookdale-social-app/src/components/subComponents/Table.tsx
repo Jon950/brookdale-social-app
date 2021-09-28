@@ -1,5 +1,6 @@
 // React
 import { useState } from 'react';
+import {Link} from "react-router-dom"
 // import FlipMove from "react-flip-move";
 
 // Firebase
@@ -195,7 +196,7 @@ import SearchBox from "../subComponents/SearchBox"
             }) === - 1) {
               newPopulation.push({
                 displayName: userData.displayName,
-                profilePicUrl: userData.profilePicUrl,
+                photoURL: userData.photoURL,
                 favoriteColor: userData.favoriteColor,
                 uid: userData.uid,
                 status: operationType
@@ -207,7 +208,7 @@ import SearchBox from "../subComponents/SearchBox"
             }), 1 );
             newPopulation.push({
               displayName: userData.displayName,
-              profilePicUrl: userData.profilePicUrl,
+              photoURL: userData.photoURL,
               favoriteColor: userData.favoriteColor,
               uid: userData.uid,
               status: "friend"
@@ -240,7 +241,7 @@ import SearchBox from "../subComponents/SearchBox"
             }) === - 1) {
               newPopulation.push({
                 displayName: row.displayName,
-                profilePicUrl: row.profilePicUrl,
+                photoURL: row.photoURL,
                 favoriteColor: row.favoriteColor,
                 uid: row.uid,
                 status: "myRequest"
@@ -252,7 +253,7 @@ import SearchBox from "../subComponents/SearchBox"
             }), 1 );
             newPopulation.push({
               displayName: row.displayName,
-              profilePicUrl: row.profilePicUrl,
+              photoURL: row.photoURL,
               favoriteColor: row.favoriteColor,
               uid: row.uid,
               status: "friend"
@@ -269,6 +270,25 @@ import SearchBox from "../subComponents/SearchBox"
     }
   }
 
+  const getMyGroup = () => {
+
+      const newList: Array<object> = [];
+
+      const q = query(collection(db, collectionName), limit(10), orderBy("displayName"), 
+      where("author_uid", "==", userData.uid));
+
+      getDocs(q).then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          data.uid = doc.id;
+          // doc.data() is never undefined for query doc snapshots
+          newList.push(data);
+        });
+        setListOut(newList);
+      });
+  }
+
+
     return (
       <>
       <div className="tableHeader">
@@ -278,8 +298,17 @@ import SearchBox from "../subComponents/SearchBox"
       </div>
         <div className="tableBox">
         <SearchBox searchSubmit={testRun} setValue={setSearchTerm}/>
-        <button className="findNewBtn" onClick={findNewList}>Find New {tableName}</button>
-        <button className="findNewBtn" onClick={() => setListOut(friendsList)}>{tableName} List</button>
+        <button className="tableBtn tableBtnL" onClick={findNewList}>Find New {tableName}</button>
+        <button className="tableBtn tableBtnR" onClick={() => setListOut(friendsList)}>{tableName} List</button>
+        {tableName === "Groups" ? 
+        <>
+        <button className="tableBtn tableBtnL" onClick={getMyGroup}>My Group</button>
+
+        <Link to="/creategroup">
+        <button className="tableBtn tableBtnR">Create Group</button>
+        </Link>
+        </>
+        : "" }
         <div className="table">
           {/* <FlipMove> */}
             {listOut.length > 0 ? <div className="scrollBox">
@@ -295,8 +324,8 @@ import SearchBox from "../subComponents/SearchBox"
               <div key={row.uid} >
                 <div className="tableRow" style={OpenRow === row.uid ? openRowStyle : {}} 
                 onClick={() => {setOpenRow(OpenRow === row.uid ? "" : row.uid); saveRatings()}}>
-                  <span>{row.profilePicUrl === "" ? <div className="tableRowImage">{row.displayName[0]}</div> : 
-                  <img width="40" height="40" src={row.profilePicUrl} alt="Thumbnail" className="thumbnail" />}</span>
+                  <span>{row.photoURL === "" ? <div className="tableRowImage">{row.displayName[0]}</div> : 
+                  <img width="40" height="40" src={row.photoURL} alt="Thumbnail" className="thumbnail" />}</span>
                   <span>{row.displayName}</span>
                   <span className="stars"><StarRatingBar size="15px" numberOfStars={
                     (row.socialScore / (row.numberOfRatings > 0 ? row.numberOfRatings : 1))}/></span>

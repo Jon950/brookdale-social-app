@@ -13,13 +13,14 @@ import { useSelector } from "react-redux";
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
-import {BiNetworkChart} from 'react-icons/bi';
+// import {BiNetworkChart} from 'react-icons/bi';
 import {GoSignOut} from 'react-icons/go';
 import {CgProfile} from 'react-icons/cg';
 
 // components
 import ProfileBox from "../subComponents/ProfileBox"
 import Widget from '../subComponents/Widget';
+import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -68,7 +69,7 @@ function UserProfile() {
                             userColorB: 201},
             friendsList: [],
             groupList: [],
-            profilePicUrl: userDataLayer.payload.photoURL,
+            photoURL: userDataLayer.payload.photoURL,
             socialScore: 0,
             numberOfRatings: 0,
             starRatingHistory: []
@@ -86,7 +87,7 @@ function UserProfile() {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings > 0 ? userData.numberOfRatings : 1))}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} photoURL={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings > 0 ? userData.numberOfRatings : 1))}/>
       
       <section className="widgetBox">
 
@@ -94,12 +95,12 @@ function UserProfile() {
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
         </Link>
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} className="linkBtn">
+        {/* <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
-        </Link>
+        </Link> */}
 
       </section>
-     
+      <FooterNav />
       </>
     );
   }
