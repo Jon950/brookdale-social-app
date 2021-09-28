@@ -1,6 +1,6 @@
 // React
-import {useEffect, useState} from "react"
-import {Link} from "react-router-dom"
+import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 
 // Firebase
 import {db, signOutUser} from "../../firebaseConfigDoc";
@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 
 // components
 import StarRatingBar from '../subComponents/StarRatingBar';
+import FooterNav from "../subComponents/FooterNav";
 
 // Color Picker
 import {CirclePicker} from "react-color";
@@ -73,8 +74,10 @@ function UserProfile() {
          <Link to="/">
          <div className="cornerBtn homeBtn"><AiFillHome  title="signOut" className="icon"/></div>
          </Link>
+         <Link to="/">
          <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
-
+         </Link>
+         
         {userDataLayer.payload.photoURL !== "" ? 
         <img src={userDataLayer.payload.photoURL} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
         : <div className="profilePictureFillIn">{userDataLayer.payload.displayName[0]}</div>
@@ -89,6 +92,7 @@ function UserProfile() {
         {isColoring ? <CirclePicker color={pickedColor} colors={colorOptionList} 
           onChangeComplete={color => updateColor(color.rgb)} /> : ""}
         
+        <FooterNav lastPage="" />
       </div>
 
   );

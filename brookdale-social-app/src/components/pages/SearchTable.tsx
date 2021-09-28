@@ -77,11 +77,14 @@ const addNewUser = () => {
  
     return (
       <>
-       <Link to="/">
-         <div className="cornerBtn homeBtn"><AiFillHome  title="User Profile" className="icon"/></div>
+        <Link to="/">
+          <div className="cornerBtn homeBtn"><AiFillHome  title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
+        <Link to="/">
+          <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
+        </Link>
+        
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
        list={list} listOut={listOut} listName={location.state.listName} setListOut={setListOut} test={addNewUser}  userData={userData}/>
       </>

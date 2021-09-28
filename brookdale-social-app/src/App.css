@@ -47,6 +47,60 @@ body {
   pointer-events: none;
 }
 
+.footerNav {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--userColorTheme);
+  border-top: 1px solid var(--userColorTrans2);
+}
+.footerNav .btn {
+  padding: 7px;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}
+
+.formPage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+.formPage p {
+  width: 80%;
+  padding: 10px 0;
+  text-align: center;
+}
+.formPage form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.formPage form label {
+  padding-top: 5px;
+}
+.formPage form input {
+  padding: 5px;
+  font-size: 18px;
+  border: none;
+}
+.formPage form textarea {
+  max-width: 99%;
+  height: 100px;
+}
+.formPage form button {
+  margin: 20px 0;
+  padding: 5px;
+  font-size: 20px;
+  color: white;
+  border: none;
+  background-color: var(--userColor);
+}
+
 .linkBtn {
   color: white;
   text-decoration: none;

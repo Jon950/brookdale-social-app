@@ -1,5 +1,6 @@
 // React
 import { useState } from 'react';
+import {Link} from "react-router-dom"
 // import FlipMove from "react-flip-move";
 
 // Firebase
@@ -269,6 +270,10 @@ import SearchBox from "../subComponents/SearchBox"
     }
   }
 
+  const createGroup = () => {
+
+  }
+
     return (
       <>
       <div className="tableHeader">
@@ -280,6 +285,11 @@ import SearchBox from "../subComponents/SearchBox"
         <SearchBox searchSubmit={testRun} setValue={setSearchTerm}/>
         <button className="findNewBtn" onClick={findNewList}>Find New {tableName}</button>
         <button className="findNewBtn" onClick={() => setListOut(friendsList)}>{tableName} List</button>
+        {tableName === "Groups" ? 
+        <Link to="/creategroup">
+        <button className="findNewBtn" onClick={() => createGroup()}>Create Group</button>
+        </Link>
+        : "" }
         <div className="table">
           {/* <FlipMove> */}
             {listOut.length > 0 ? <div className="scrollBox">

@@ -15,15 +15,7 @@ interface ProfileProps {
 }
 
 const ProfileBox: React.FC<ProfileProps> = ({deslpayName, profilePicUrl, numberOfStars}) => {
-  // const [userData, setUserData] = useState({profilePicUrl: "", deslpayName: "John Smith"})
-  // const [numberOfStars, setnumberOfStars] = useState( 0);
 
-
-
-
-
-  
- 
   return (
     <>
       <div className="profilePictureBox">
