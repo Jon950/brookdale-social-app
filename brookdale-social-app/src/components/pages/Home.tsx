@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
-// import {BiNetworkChart} from 'react-icons/bi';
 import {GoSignOut} from 'react-icons/go';
 import {CgProfile} from 'react-icons/cg';
 

@@ -32,7 +32,7 @@ import GroupProfile from "./components/pages/GroupProfile";
 
 
 function App() {
-console.log("REACT_APP_Version", process.env.REACT_APP_Version)
+console.log("REACT_APP_Version", process.env.REACT_APP_Version);
 
 const dispatch = useDispatch();
 const {actionOne} = bindActionCreators(actionCreators, dispatch);
