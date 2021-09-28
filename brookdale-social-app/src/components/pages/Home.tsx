@@ -13,13 +13,14 @@ import { useSelector } from "react-redux";
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
-import {BiNetworkChart} from 'react-icons/bi';
+// import {BiNetworkChart} from 'react-icons/bi';
 import {GoSignOut} from 'react-icons/go';
 import {CgProfile} from 'react-icons/cg';
 
 // components
 import ProfileBox from "../subComponents/ProfileBox"
 import Widget from '../subComponents/Widget';
+import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -94,12 +95,12 @@ function UserProfile() {
         <Widget type={"Friends"} numberOf={userData.numberOfFriends} icon={<FaUserFriends size="30px" title="Friends"/>}/>
         </Link>
 
-        <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} className="linkBtn">
+        {/* <Link to={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} className="linkBtn">
         <Widget type={"Groups"} numberOf={userData.numberOfGroups} icon={<BiNetworkChart size="30px" title="Groups"/>}/>
-        </Link>
+        </Link> */}
 
       </section>
-     
+      <FooterNav />
       </>
     );
   }

@@ -105,7 +105,7 @@ const FormPage: React.FC<FormProps> = ({formName, formDescription}) => {
         <button type="submit">Submit</button>
         
         </form>
-        <FooterNav lastPage={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} />
+        <FooterNav />
       </div>
     );
   }

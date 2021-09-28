@@ -1,26 +1,22 @@
 // React
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
   
 // Icons
 import { AiFillHome } from 'react-icons/ai';
 import { RiArrowGoBackFill } from 'react-icons/ri';
   
-interface FooterProps {
-    lastPage: any,   
-  }
-  
-  const FooterNav: React.FC<FooterProps> = ({lastPage = ""}) => {
+
+  const FooterNav = () => {
+    const history = useHistory();
   
     return (
       <nav className="footerNav">
-          {lastPage !== "" ?
-        <Link to={lastPage}>
-          <div className="btn"><RiArrowGoBackFill  title="User Profile" className="icon"/></div>
-        </Link>
-        : ""}
+         
+        <div className="btn" onClick={history.goBack}><RiArrowGoBackFill  title="goBack" className="icon"/></div>
 
         <Link to="/">
-          <div className="btn"><AiFillHome  title="User Profile" className="icon"/></div>
+          <div className="btn"><AiFillHome  title="Home" className="icon"/></div>
         </Link>
       </nav>
     );

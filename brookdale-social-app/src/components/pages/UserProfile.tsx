@@ -92,7 +92,7 @@ function UserProfile() {
         {isColoring ? <CirclePicker color={pickedColor} colors={colorOptionList} 
           onChangeComplete={color => updateColor(color.rgb)} /> : ""}
         
-        <FooterNav lastPage="" />
+        <FooterNav />
       </div>
 
   );

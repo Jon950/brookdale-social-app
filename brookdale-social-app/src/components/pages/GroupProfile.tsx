@@ -99,7 +99,7 @@ const GroupProfile = () => {
         {isColoring ? <CirclePicker color={pickedColor} colors={colorOptionList} 
           onChangeComplete={color => updateColor(color.rgb)} /> : ""}
         
-        <FooterNav lastPage={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} />
+        <FooterNav  />
       </div>
 
   );

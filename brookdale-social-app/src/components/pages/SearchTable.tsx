@@ -15,6 +15,7 @@ import {AiFillHome} from "react-icons/ai";
 
 // components
 import Table from "../subComponents/Table"
+import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -87,6 +88,7 @@ const addNewUser = () => {
         
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
        list={list} listOut={listOut} listName={location.state.listName} setListOut={setListOut} test={addNewUser}  userData={userData}/>
+      <FooterNav />
       </>
     );
   }
