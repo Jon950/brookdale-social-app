@@ -68,7 +68,7 @@ function UserProfile() {
                             userColorB: 201},
             friendsList: [],
             groupList: [],
-            profilePicUrl: userDataLayer.payload.photoURL,
+            photoURL: userDataLayer.payload.photoURL,
             socialScore: 0,
             numberOfRatings: 0,
             starRatingHistory: []
@@ -86,7 +86,7 @@ function UserProfile() {
 
       <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
 
-      <ProfileBox deslpayName={userDataLayer.payload.displayName} profilePicUrl={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings > 0 ? userData.numberOfRatings : 1))}/>
+      <ProfileBox deslpayName={userDataLayer.payload.displayName} photoURL={userDataLayer.payload.photoURL} numberOfStars={(userData.socialScore / (userData.numberOfRatings > 0 ? userData.numberOfRatings : 1))}/>
       
       <section className="widgetBox">
 

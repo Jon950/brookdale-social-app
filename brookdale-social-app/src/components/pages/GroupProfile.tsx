@@ -1,6 +1,6 @@
 // React
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom"
 
 // Firebase
 import {db, signOutUser} from "../../firebaseConfigDoc";
@@ -21,8 +21,10 @@ import {AiFillHome} from "react-icons/ai";
 import {GoSignOut} from "react-icons/go";
 
 
-function GroupProfile() {
-  const [userData, setUserData] = useState<any>({displayName: "", starRating: 0, numberOfFriends: 0, numberOfGroups: 0});
+const GroupProfile = () => {
+  const location: any = useLocation();
+
+  const [groupData, setGroupData] = useState<any>({displayName: "", starRating: 0, numberOfFriends: 0, numberOfGroups: 0});
   const [isColoring, setIsColoring] = useState<boolean>(false);
   const [pickedColor, setPickedColor] = useState<any>({});
 
@@ -32,22 +34,23 @@ function GroupProfile() {
 
   const userDataLayer: any = useSelector((state: any) => state.user);
 
+
   useEffect(() => {
 
-    onSnapshot(doc(db, "users", userDataLayer.payload.uid), (doc) => {
-      const data: any = doc.data()
+    onSnapshot(doc(db, "groups", location.state.displayName + "-" + userDataLayer.payload.uid), (doc) => {
+      const data: any = doc.data();
       if(data){
-        console.log("server --------------------",data)
+        console.log("server --------------------",data);
 
         document.documentElement.style.setProperty("--userColorR", data.favoriteColor.userColorR);
         document.documentElement.style.setProperty("--userColorG", data.favoriteColor.userColorG);
         document.documentElement.style.setProperty("--userColorB", data.favoriteColor.userColorB);
 
-        setUserData(data);
+        setGroupData(data);
       }
     });
     
-  },[userDataLayer.payload.uid])
+  },[location.state.displayName, userDataLayer.payload.uid])
 
   const updateColor = (color: any) => {
     setPickedColor(color);
@@ -58,7 +61,7 @@ function GroupProfile() {
 
   const saveColor = () => {
     if(isColoring && pickedColor.r){
-      updateDoc(doc(db, "users", userDataLayer.payload.uid), {
+      updateDoc(doc(db, "groups", location.state.displayName + "-" + userDataLayer.payload.uid), {
       favoriteColor: {
         userColorR: pickedColor.r,
         userColorG: pickedColor.g,
@@ -78,17 +81,21 @@ function GroupProfile() {
          <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut title="signOut" className="icon"/></div>
          </Link>
          
-        {userDataLayer.payload.photoURL !== "" ? 
-        <img src={userDataLayer.payload.photoURL} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
-        : <div className="profilePictureFillIn">{userDataLayer.payload.displayName[0]}</div>
+        {groupData.photoURL !== "" ? 
+        <img src={groupData.photoURL} className="profilePicture" alt="Group Profile Pic" width="200px" height="200px" />
+        : <div className="profilePictureFillIn">{groupData.displayName[0]}</div>
         }
-        <h4>{userDataLayer.payload.displayName}</h4>
+        <h4>{groupData.displayName}</h4>
 
-        <StarRatingBar size="20px" numberOfStars={(userData.socialScore / userData.numberOfRatings)}/>
+        <StarRatingBar size="20px" numberOfStars={(groupData.socialScore / (groupData.numberOfRatings > 0 ? groupData.numberOfRatings : 1))}/>
 
-        <h5>{userDataLayer.payload.email}</h5>
+        <h5>Description</h5>
+        <p>{groupData.description}</p>
 
-        <div className="colorBar" onClick={() => {setIsColoring(!isColoring); saveColor()}}>Your favorite color</div>
+        <h5>Objective</h5>
+        <p>{groupData.objective}</p>
+
+        <div className="colorBar" onClick={() => {setIsColoring(!isColoring); saveColor()}}>Group color</div>
         {isColoring ? <CirclePicker color={pickedColor} colors={colorOptionList} 
           onChangeComplete={color => updateColor(color.rgb)} /> : ""}
         

@@ -1,14 +1,12 @@
+// React
+import { useHistory } from "react-router-dom";
 
 // Firebase
 import {db} from "../../firebaseConfigDoc";
-import { doc, setDoc } from "firebase/firestore";
-
+import { doc, setDoc, runTransaction } from "firebase/firestore";
 
 // Redux
 import { useSelector } from "react-redux";
-
-// Pages
-import GroupProfile from "../pages/GroupProfile";
 
 // Components
 import { useState } from "react";
@@ -28,10 +26,11 @@ const FormPage: React.FC<FormProps> = ({formName, formDescription}) => {
   const [description, setDescription] = useState("");
   const [objective, setObjective] = useState("");
 
+  const history = useHistory();
+
 
 
   const submitForm = () => {
-    console.log("name", userDataLayer.payload.uid, name, description, objective);
 
     const letterArray = []
           let index = 3;
@@ -40,26 +39,56 @@ const FormPage: React.FC<FormProps> = ({formName, formDescription}) => {
             letterArray.push(name.slice(0,index).toLowerCase());
             ++index;
           }
+          const data = {
+            displayName: name,
+            description,
+            objective,
+            author_uid: userDataLayer.payload.uid,
+            userNameArray: letterArray,
+            favoriteColor: {userColorR: 154,
+                            userColorG: 140,
+                            userColorB: 201},
+            friendsList: [],
+            photoURL: "",
+            socialScore: 0,
+            numberOfRatings: 0,
+          };
 
-    setDoc(doc(db, "groups", name + "-" + userDataLayer.payload.uid), {
-      displayName: name,
-      description,
-      objective,
-      author_uid: userDataLayer.payload.uid,
-      userNameArray: letterArray,
-      favoriteColor: {userColorR: 154,
-                      userColorG: 140,
-                      userColorB: 201},
-      friendsList: [],
-      profilePicUrl: "",
-      socialScore: 0,
-      numberOfRatings: 0,
+    setDoc(doc(db, "groups", name + "-" + userDataLayer.payload.uid), data);
+
+    const thisUserDocRef = doc(db, "users", userDataLayer.payload.uid);
+      try {
+        runTransaction(db, async (transaction) => {
+          const sfDoc = await transaction.get(thisUserDocRef);
+          if (!sfDoc.exists()) {
+            throw console.log("Document does not exist!");
+          }
+
+          const newPopulation = sfDoc.data().groupList;
+
+          
+            if(newPopulation.findIndex((object: any, index:number) => {
+              return object.author_uid === userDataLayer.payload.uid;
+            }) === - 1) {
+              newPopulation.push(data);
+            }
+
+
+          transaction.update(thisUserDocRef, { groupList: newPopulation });
+          console.log("DDFSDF", newPopulation)
+        });
+        console.log("Transaction successfully committed!");
+      } catch (e) {
+        console.log("Transaction failed: ", e);
+      }
+
+    history.push({
+      pathname: '/groupprofile',
+      state: data
     });
   }
 
     return (
-      <>
-      {false ?
       <div className="formPage">
         <h2>Create {formName}</h2>
         <p>{formDescription}</p>
@@ -72,14 +101,12 @@ const FormPage: React.FC<FormProps> = ({formName, formDescription}) => {
 
         <label htmlFor="objectiveID">{formName} objective:</label>
         <textarea id="objectiveID" name="objective" maxLength={200} onChange={(event:any) => setObjective(event.target.value)} required/>
-        <button type="submit" >Submit</button>
+        
+        <button type="submit">Submit</button>
+        
         </form>
         <FooterNav lastPage={{pathname: "/searchtable",state:{tableName: "Groups", collectionName: "groups", requestListName: "groupRequests", listName:"groupList"}}} />
       </div>
-      : 
-      <GroupProfile />
-      }
-      </>
     );
   }
   

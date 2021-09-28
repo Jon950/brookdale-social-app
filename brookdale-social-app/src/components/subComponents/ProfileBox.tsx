@@ -9,19 +9,19 @@ import StarRatingBar from './StarRatingBar';
 
 interface ProfileProps {
   deslpayName:string,
-  profilePicUrl: string,
+  photoURL: string,
   numberOfStars: number,
  
 }
 
-const ProfileBox: React.FC<ProfileProps> = ({deslpayName, profilePicUrl, numberOfStars}) => {
+const ProfileBox: React.FC<ProfileProps> = ({deslpayName, photoURL, numberOfStars}) => {
 
   return (
     <>
       <div className="profilePictureBox">
         <Link to="/userprofile" className="linkBtn">
-        {profilePicUrl !== "" ? 
-        <img src={profilePicUrl} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
+        {photoURL !== "" ? 
+        <img src={photoURL} className="profilePicture" alt="User Profile Pic" width="200px" height="200px" />
         : <div className="profilePictureFillIn">{deslpayName[0]}</div>
         }
         </Link>
