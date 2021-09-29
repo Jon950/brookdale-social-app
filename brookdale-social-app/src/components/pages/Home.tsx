@@ -13,14 +13,12 @@ import { useSelector } from "react-redux";
 
 // Icons
 import {FaUserFriends} from 'react-icons/fa';
-// import {BiNetworkChart} from 'react-icons/bi';
 import {GoSignOut} from 'react-icons/go';
 import {CgProfile} from 'react-icons/cg';
 
 // components
 import ProfileBox from "../subComponents/ProfileBox"
 import Widget from '../subComponents/Widget';
-import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -100,7 +98,6 @@ function UserProfile() {
         </Link> */}
 
       </section>
-      <FooterNav />
       </>
     );
   }
