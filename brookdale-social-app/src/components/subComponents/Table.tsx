@@ -46,10 +46,7 @@ import SearchBox from "../subComponents/SearchBox"
       }
       return null;
     });
-
     
-
-
 
 
     const openRowStyle = {borderRadius: "10px 10px 0 0"};

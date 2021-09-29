@@ -19,7 +19,6 @@ import {CgProfile} from 'react-icons/cg';
 // components
 import ProfileBox from "../subComponents/ProfileBox"
 import Widget from '../subComponents/Widget';
-import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -99,7 +98,6 @@ function UserProfile() {
         </Link> */}
 
       </section>
-      <FooterNav />
       </>
     );
   }
