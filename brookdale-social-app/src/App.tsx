@@ -23,14 +23,16 @@ import './App.css';
 
 
 // Pages
-import Home from "./components/pages/Home"
+import Home from "./components/pages/Home";
 import SignIn from './components/pages/SignIn';
 import UserProfile from "./components/pages/UserProfile";
-import SearchTable from "./components/pages/SearchTable"
+import SearchTable from "./components/pages/SearchTable";
+import FormPage from "./components/pages/FormPage";
+import GroupProfile from "./components/pages/GroupProfile";
 
 
 function App() {
-console.log("REACT_APP_Version", process.env.REACT_APP_Version)
+console.log("REACT_APP_Version", process.env.REACT_APP_Version);
 
 const dispatch = useDispatch();
 const {actionOne} = bindActionCreators(actionCreators, dispatch);
@@ -68,6 +70,15 @@ useEffect(() =>{
 
         <Route exact path="/searchtable">
           <SearchTable />
+        </Route>
+
+        <Route exact path="/creategroup">
+          <FormPage formName="Group" formDescription="By creating a group, you will become the author. 
+          This means, you will have the responsibility of accepting or blocking any users who wishes to join."/>
+        </Route>
+
+        <Route exact path="/groupprofile">
+          <GroupProfile />
         </Route>
        </Switch>
 }

@@ -15,6 +15,7 @@ import {AiFillHome} from "react-icons/ai";
 
 // components
 import Table from "../subComponents/Table"
+import FooterNav from "../subComponents/FooterNav";
 
 
 
@@ -33,7 +34,7 @@ const addNewUser = () => {
       
       list.push({
         displayName: data.results[0].name.first, 
-        profilePicUrl: data.results[0].picture.thumbnail,
+        photoURL: data.results[0].picture.thumbnail,
         starRating: Math.floor(Math.random() * 5), 
         uid: data.results[0].email})
 
@@ -77,13 +78,17 @@ const addNewUser = () => {
  
     return (
       <>
-       <Link to="/">
-         <div className="cornerBtn homeBtn"><AiFillHome  title="User Profile" className="icon"/></div>
+        <Link to="/">
+          <div className="cornerBtn homeBtn"><AiFillHome  title="User Profile" className="icon"/></div>
         </Link>
 
-      <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
+        <Link to="/">
+          <div className="cornerBtn signOutBtn" onClick={signOutUser}><GoSignOut  title="signOut" className="icon"/></div>
+        </Link>
+        
       <Table tableName={location.state.tableName} collectionName={location.state.collectionName} 
        list={list} listOut={listOut} listName={location.state.listName} setListOut={setListOut} test={addNewUser}  userData={userData}/>
+      <FooterNav />
       </>
     );
   }
