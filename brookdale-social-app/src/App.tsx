@@ -18,10 +18,6 @@ import {auth} from "./firebaseConfigDoc";
 // CSS
 import './App.css';
 
-
-// Icons
-
-
 // Pages
 import Home from "./components/pages/Home";
 import SignIn from './components/pages/SignIn';
@@ -39,6 +35,9 @@ const {actionOne} = bindActionCreators(actionCreators, dispatch);
 const userData = useSelector((state: any) => state.user);
 
 useEffect(() =>{
+  if(userData.payload === undefined && window.location.pathname !== "/") {
+    window.location.replace("/");
+  }
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -51,7 +50,6 @@ useEffect(() =>{
   });
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
-
 
 
   return (
