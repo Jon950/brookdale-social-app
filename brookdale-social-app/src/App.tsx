@@ -79,7 +79,7 @@ useEffect(() =>{
           <GroupProfile />
         </Route>
        </Switch>
-}
+       }
     </div>
     </Router>
   );
