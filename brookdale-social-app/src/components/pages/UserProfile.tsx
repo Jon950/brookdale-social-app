@@ -88,7 +88,7 @@ function UserProfile() {
 
         <h5>{userDataLayer.payload.email}</h5>
 
-        <div className="colorBar" onClick={() => {setIsColoring(!isColoring); saveColor()}}>Your favorite color</div>
+        <div className="colorBar" onClick={() => {setIsColoring(!isColoring); saveColor()}}>{isColoring ? "Save your color" : "Your favorite color"}</div>
         {isColoring ? <CirclePicker color={pickedColor} colors={colorOptionList} 
           onChangeComplete={color => updateColor(color.rgb)} /> : ""}
         
