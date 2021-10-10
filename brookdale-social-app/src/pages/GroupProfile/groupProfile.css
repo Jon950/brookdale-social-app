@@ -1,0 +1,13 @@
+.GroupProfile {
+  height: 100vh;
+  padding-top: 10px;
+  background-color: var(--userColorTheme);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.GroupProfile h4 {
+  padding-top: 20px;
+}

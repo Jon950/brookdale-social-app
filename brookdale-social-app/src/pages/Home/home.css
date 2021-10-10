@@ -1,0 +1,10 @@
+.widgetBox {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: calc(100vh - 300px);
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  color: white;
+}
