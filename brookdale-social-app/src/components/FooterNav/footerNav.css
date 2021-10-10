@@ -1,0 +1,17 @@
+.footerNav {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--userColorTheme);
+  border-top: 1px solid var(--userColorTrans2);
+}
+.footerNav .btn {
+  position: relative;
+  padding: 7px;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}

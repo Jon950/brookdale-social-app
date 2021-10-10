@@ -1,0 +1,25 @@
+.UserProfile {
+  height: 100vh;
+  padding-top: 10px;
+  background-color: var(--userColorTheme);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.UserProfile h4 {
+  padding-top: 20px;
+}
+
+.colorBar {
+  width: 170px;
+  margin: 10px 0;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: var(--userColor);
+}

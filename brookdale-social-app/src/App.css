@@ -42,65 +42,15 @@ body {
   overflow: hidden;
   background-color: var(--userColorTheme);
 }
+.loadingScreen {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .App-logo {
   height: 90vmin;
   pointer-events: none;
-}
-
-.footerNav {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-around;
-  background-color: var(--userColorTheme);
-  border-top: 1px solid var(--userColorTrans2);
-}
-.footerNav .btn {
-  position: relative;
-  padding: 7px;
-  color: white;
-  text-align: center;
-  font-size: 30px;
-}
-
-.formPage {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-}
-.formPage p {
-  width: 80%;
-  padding: 10px 0;
-  text-align: center;
-}
-.formPage form {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-.formPage form label {
-  padding-top: 5px;
-}
-.formPage form input {
-  padding: 5px;
-  font-size: 18px;
-  border: none;
-}
-.formPage form textarea {
-  max-width: 99%;
-  height: 100px;
-}
-
-.formPage form button {
-  margin: 20px 0;
-  padding: 5px;
-  font-size: 20px;
-  color: white;
-  border: none;
-  background-color: var(--userColor);
 }
 
 .linkBtn {
@@ -108,83 +58,6 @@ body {
   text-decoration: none;
 }
 
-.welcomeSection {
-  padding: 20px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
-}
-
-.signInPage {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.signInBtnBox {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.signInBtnBox p {
-  width: 90%;
-  padding: 10px;
-  text-align: center;
-  font-size: 12px;
-  color: rgb(119, 119, 119);
-}
-.signInBtn {
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-}
-
-.tableBtn {
-  padding: 5px 0;
-  font-size: 20px;
-  color: white;
-  border: none;
-  background-color: var(--userColor);
-}
-.tableBtnC {
-  width: 100%;
-}
-.tableBtnL {
-  width: 50%;
-  border-right: 2px solid var(--userColorTheme);
-}
-.tableBtnR {
-  width: 50%;
-  border-left: 2px solid var(--userColorTheme);
-}
-.UserProfile {
-  height: 100vh;
-  padding-top: 10px;
-  background-color: var(--userColorTheme);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-}
-.UserProfile h4 {
-  padding-top: 20px;
-}
-.colorBar {
-  width: 170px;
-  margin: 10px 0;
-  padding: 5px;
-  border: 1px solid black;
-  border-radius: 20px;
-  text-align: center;
-  font-weight: 600;
-  cursor: pointer;
-  background-color: var(--userColor);
-}
 .profilePictureBox {
   height: 300px;
   padding-top: 2px;
@@ -223,51 +96,6 @@ body {
   box-shadow: 0px 0px 7px 6px rgb(211, 201, 110);
 }
 
-.starRating {
-  padding: 10px 5px;
-  display: flex;
-  justify-content: space-evenly;
-}
-.starRating span {
-  padding: 0 5px;
-}
-
-.widgetBox {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  height: calc(100vh - 300px);
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  color: white;
-}
-.widget {
-  width: 40vw;
-  max-width: 200px;
-  height: 150px;
-  margin: 0 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 5px;
-  border-radius: 10px;
-  background-color: var(--userColorTrans1);
-  cursor: pointer;
-}
-.widget:hover {
-  box-shadow: 0px 0px 7px 6px rgb(211, 201, 110);
-}
-.FriendsRing {
-  width: 75px;
-  height: 75px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--userColorTrans2);
-  border-radius: 50%;
-}
 .cornerBtn {
   width: 25px;
   height: 25px;
@@ -310,122 +138,25 @@ body {
   background-color: var(--userColor);
 }
 
-.tableHeader {
-  width: 100%;
-  padding: 15px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
+/* border pulsate */
+@keyframes border-pulsate {
+  0% {
+    border-color: rgb(255, 115, 0);
+    box-shadow: 0 0 20px 1px rgb(255, 115, 0);
+  }
+  50% {
+    border-color: rgba(0, 255, 255, 0);
+    box-shadow: 0 0 2px 1px rgba(0, 255, 255, 0);
+  }
+  100% {
+    border-color: rgb(255, 115, 0);
+    box-shadow: 0 0 20px 1px rgb(255, 115, 0);
+  }
 }
 
-.tableHeader h2 {
-  position: relative;
-}
-
-.newUserIcon {
-  padding: 3px 5px;
-  position: absolute;
-  border-radius: 4px;
-  font-size: 13px;
-  background-color: red;
-}
-
-.tableBox {
-  width: 100%;
-  height: calc(100% - 60px);
-  border-top: 1px solid var(--userColorTrans1);
-}
-
-.table {
-  width: 100%;
-  height: calc(100% - 64px);
-  overflow: hidden;
-  /* background-color: blueviolet; */
-}
-
-.tableRow {
-  padding: 5px;
-  display: flex;
-  margin: 5px;
-  align-items: center;
-  border: 1px solid var(--userColorTrans1);
-  border-radius: 10px;
-  color: white;
-  position: relative;
-}
-
-.tableRow .stars {
-  position: absolute;
-  right: 0;
-}
-
-.tableRowDropDown {
-  height: 55px;
-  padding: 5px 0;
-  display: flex;
-  margin: 0 5px;
-  margin-top: -5px;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--userColorTrans1);
-  border-radius: 0 0 10px 10px;
-  color: white;
-  position: relative;
-}
-.starSetter {
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-.tableRowDropDown .slider {
-  width: 116px;
-  position: absolute;
-  bottom: -10px;
-  height: 20px;
-  background-color: rgb(0, 0, 0, 0);
-  -webkit-appearance: none;
-}
-
-.scrollBox {
-  height: calc(100% - 5px);
-  overflow-y: auto;
-}
-.thumbnail {
-  border-radius: 50%;
-  margin-right: 10px;
-}
-.tableRowImage {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--userColor);
-}
-
-.emptyTableMessageBox {
-  height: calc(100% - 60px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-.searchFormBox {
-  display: flex;
-  justify-content: center;
-}
-.searchInput {
-  width: 100%;
-  padding: 7px;
-  font-size: 20px;
-  border: none;
-}
-.searchBtn {
-  width: 10%;
+.borderPulsate {
+  border: 1px solid cyan;
+  animation: border-pulsate 2s infinite;
 }
 
 @media screen and (min-width: 800px) {
